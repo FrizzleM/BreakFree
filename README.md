@@ -1,5 +1,16 @@
 # BreakFree
-![Screenshot_2025-03-05_at_15 08 58-removebg-preview](https://github.com/user-attachments/assets/b16e96e5-fd11-4777-8025-5aefd54f5c30)
+![rsz_breakfree-removebg-preview](https://github.com/user-attachments/assets/b4610701-2c91-4cd2-92fd-2c33502975ea)
+
 
 A free iOS shortcut that lets you sideload unlimited apps on your iOS and iPadOS device using a DNS and public certificates (given by WSF).
 It works by applying WSF's DNS and using WSF's Portal app to install an installer.
+
+## How does it work?
+This shortcut takes different developer certificates leaked from different companies, and uses them on your device. This makes it look like you're part of that company, testing their apps, when you're actually using it for your needs. Apple patched this in 2016 with iOS 10, but users recently realized you can get over the patch by using DNSs, which blocks Apple from spying on you. This is exactly what this shortcut does.
+
+## Is my device compatible?
+Is your device an iPhone or an iPad? Does it have an iOS version older than iOS 14? If both answers are yes, it is compatible.
+A version older than iOS 14 is needed, unfortunately this won't work since shortcuts were introduced in iOS 14. Still, if your version is that old, there most likely are jailbreak options you could consider using. They can do the same if not more.
+
+## Where can I download it
+I will publish it soon, hang on tight!
