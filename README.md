@@ -14,4 +14,5 @@ A version older than iOS 14 is needed, unfortunately this won't work with device
 
 ## Where can I download it?
 You can find it in the Releases section.
+
 Alternatively, you can download it using the following link: https://www.icloud.com/shortcuts/eb51ce5ab15e4e879fbc9fe151f17c10
