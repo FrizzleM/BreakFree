@@ -1,0 +1,13 @@
+# What installer should I pick?
+
+Good question, here are my favorite installers:
+
+## ✅ ESign
+Overall, the best option. It is not the most user friendly, but it is quick, free and customizable as much as you would ever want. Although, it does lack a bit of optimization in its UI. Not a severe issue, just keep in mind that you sometimes will not understand what to do without some sort of guide.
+
+## ✅ Feather
+Honestly, my favorite one. Not as popular as ESign, but it is constantly updated with user requested features, does not track your data (unlike ESign) and has a much more user friendly interface. The best for beginners. There are sme missing features, but they are secondary, therefore unnecessary, and the dev is actually gradually adding most of the user requested features.
+HOWEVER, it is not too optimized for the DNS + expired cert method (the one this shortcut uses), unlike ESign. Therefore, although the chances are low, you still might encounter some issues with the app installation or usage. Keep this in mind!
+
+## ❌ Scarlet
+Might sound controversial, but for me it's a no go, which is why it is not in my shortcut nor am I planning on adding it. There are many reasons, but the major ones are the lack of maintainance, the various bugs for iOS 18, and the suspicions users have had regarding data collection. It also lacks customizability, just avoid it.
