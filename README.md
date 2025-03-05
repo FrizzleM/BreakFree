@@ -12,5 +12,6 @@ This shortcut takes different developer certificates leaked from different compa
 Is your device an iPhone or an iPad? Does it have any iOS version older than iOS 14? If both answers are yes, it is compatible.
 A version older than iOS 14 is needed, unfortunately this won't work with devices under iOS 14 since shortcuts were introduced in iOS 14. Still, if your version is that old, there most likely are jailbreak options you could consider using. They can do the same if not more.
 
-## Where can I download it
-I will publish it soon, hang on tight!
+## Where can I download it?
+You can find it in the Releases section.
+Alternatively, you can download it using the following link: https://www.icloud.com/shortcuts/eb51ce5ab15e4e879fbc9fe151f17c10
