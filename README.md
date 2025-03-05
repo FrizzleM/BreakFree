@@ -16,3 +16,7 @@ A version older than iOS 14 is needed, unfortunately this won't work with device
 You can find it in the Releases section.
 
 Alternatively, you can download it using [this link](https://www.icloud.com/shortcuts/fac6e7f4a5fb4fe8a60945c62e7b81cb)
+
+## What are you planning on adding in future versions?
+In the next updates, I will try to add a video guide, as well as 
+fixing bugs/typos and adding any feature requested by the community.
