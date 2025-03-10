@@ -19,3 +19,9 @@ It is also available in my [RoutineHub](https://routinehub.co/shortcut/21677/)
 ## What are you planning on adding in future versions?
 In the next updates, I am planning on making the process as fast and user friendly as possible. If there's any section that you find too complex, let me know and I will try explaining
 it better. I will also try fixing bugs/typos and adding any feature requested by the community.
+
+## License
+This project is licensed under a custom **Personal Use License**.  
+- You may download and modify it for personal use.  
+- Redistribution, whether modified or unmodified, is **strictly prohibited**.  
+See the [LICENSE](./LICENSE) file for more details.  
