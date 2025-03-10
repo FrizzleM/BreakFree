@@ -2,11 +2,6 @@
 
 Good question, here are my favorite installers:
 
-## ✅ ESign
-Overall, the best option. It is not the most user friendly, but it is quick, free and customizable as much as you would ever want. 
-Although, it does lack a bit of optimization in its UI. 
-Not a severe issue, just keep in mind that you sometimes will not understand what to do without some sort of guide.
-
 ## ✅ Feather
 Honestly, my favorite one. 
 Not as popular as ESign, but it is constantly updated with user requested features, 
@@ -16,6 +11,11 @@ and the dev is actually gradually adding most of the user requested features.
 
 HOWEVER, it is not too optimized for the DNS + expired cert method (the one this shortcut uses), unlike ESign. 
 Therefore, although the chances are low, you still might encounter some issues with the app installation or usage. Keep this in mind!
+
+## ✅ ESign
+Overall, the best option. It is not the most user friendly, but it is quick, free and customizable as much as you would ever want. 
+Although, it does lack a bit of optimization in its UI. 
+Not a severe issue, just keep in mind that you sometimes will not understand what to do without some sort of guide.
 
 ## ❌ Scarlet
 Might sound controversial, but for me it's a no go, which is why it is not in my shortcut nor am I planning on adding it. 
