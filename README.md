@@ -17,8 +17,7 @@ You can find it in the Releases section.
 It is also available in my [RoutineHub](https://routinehub.co/shortcut/21677/)
 
 ## What are you planning on adding in future versions?
-In the next updates, I am planning on making the process as fast and user friendly as possible. If there's any section that you find too complex, let me know and I will try explaining
-it better. I will also try fixing bugs/typos and adding any feature requested by the community.
+In the next updates, I will introduce the sideloading app Portal as an option, remaking checkpoint 4, as well as fixing bugs/typos and adding any feature requested by the community.
 
 ## License
 This project is licensed under a custom **Personal Use License**.  
