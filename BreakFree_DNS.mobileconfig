@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>PayloadDisplayName</key>
+    <string>BreakFree DNS</string>
+    <key>PayloadDescription</key>
+    <string>This profile enables BreakFree DNS to block Apple’s certificate and app validation checks for easier sideloading.</string>
+    <key>PayloadIdentifier</key>
+    <string>com.breakfree.dns.profile</string>
+    <key>PayloadScope</key>
+    <string>User</string>
+    <key>PayloadType</key>
+    <string>Configuration</string>
+    <key>PayloadUUID</key>
+    <string>23A1F3A2-BD12-4781-A7D3-F1CB48A1B601</string>
+    <key>PayloadVersion</key>
+    <integer>1</integer>
+    <key>PayloadOrganization</key>
+    <string>BreakFree</string>
+    <key>PayloadContent</key>
+    <array>
+      <dict>
+        <key>PayloadType</key>
+        <string>com.apple.dnsSettings.managed</string>
+        <key>PayloadVersion</key>
+        <integer>1</integer>
+        <key>PayloadIdentifier</key>
+        <string>com.breakfree.dns.profile.dnsSettings.managed</string>
+        <key>PayloadUUID</key>
+        <string>5FDC1023-ABE6-4E67-B597-9E7F0D7FC702</string>
+        <key>PayloadDisplayName</key>
+        <string>BreakFree DNS</string>
+        <key>PayloadOrganization</key>
+        <string>BreakFree</string>
+        <key>DNSSettings</key>
+        <dict>
+          <key>DNSProtocol</key>
+          <string>HTTPS</string>
+          <key>ServerURL</key>
+          <string>https://apple.dns.nextdns.io/73f83a</string>
+        </dict>
+      </dict>
+    </array>
+  </dict>
+</plist>
