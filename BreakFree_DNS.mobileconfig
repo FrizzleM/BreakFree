@@ -5,7 +5,7 @@
     <key>PayloadDisplayName</key>
     <string>BreakFree DNS</string>
     <key>PayloadDescription</key>
-    <string>This profile enables BreakFree DNS to block Apple’s certificate and app validation checks for easier sideloading.</string>
+    <string>This profile enables BreakFree DNS to block Apple certificate and app validation checks for easier sideloading.</string>
     <key>PayloadIdentifier</key>
     <string>com.breakfree.dns.profile</string>
     <key>PayloadScope</key>
