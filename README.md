@@ -9,7 +9,7 @@ This shortcut takes different developer certificates leaked from different compa
 
 ## Is my device compatible?
 Is your device an iPhone or an iPad? Is your device running from iOS 16 to the latest? If both answers are yes, it is compatible.
-A version older than iOS 16 is needed, unfortunately this won't work with devices under iOS 16. Still, if your version is that old, there is Trollstore or jailbreak options you could consider using. They can do the same if not more.
+A version higher than iOS 16 is needed, unfortunately this won't work with devices under iOS 16. Still, if your version is that old, there is Trollstore or jailbreak options you could consider using. They can do the same if not more.
 
 ## Where can I download it?
 You can find it in the Releases section.
