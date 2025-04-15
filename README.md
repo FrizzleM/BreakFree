@@ -12,7 +12,7 @@ Is your device an iPhone or an iPad? Is your device running from iOS 16 to the l
 A version higher than iOS 16 is needed, unfortunately this won't work with devices under iOS 16. Still, if your version is that old, there is Trollstore or jailbreak options you could consider using. They can do the same if not more.
 
 ## Where can I download it?
-You can find it in the Releases section.
+You can find it in the [Releases](https://github.com/FrizzleM/BreakFree/releases) section.
 It is also available in my [RoutineHub](https://routinehub.co/shortcut/21677/)
 
 ## What are you planning on adding in future versions?
