@@ -3,36 +3,22 @@
 <plist version="1.0">
   <dict>
     <key>PayloadDisplayName</key>
-    <string>BreakFree DNS</string>
+    <string>BreakFreeDNS</string>
     <key>PayloadDescription</key>
-    <string>This profile enables BreakFree DNS to block Apple certificate and app validation checks for easier sideloading.</string>
+    <string>A config profile by Frizzle that stops Apple from spying your sideloaded apps!</string>
     <key>PayloadIdentifier</key>
-    <string>com.breakfree.dns.profile</string>
+    <string>io.nextdns.73f83a.profile</string>
     <key>PayloadScope</key>
     <string>User</string>
     <key>PayloadType</key>
     <string>Configuration</string>
     <key>PayloadUUID</key>
-    <string>23A1F3A2-BD12-4781-A7D3-F1CB48A1B601</string>
+    <string>A1E2F262-DB73-40F6-BD22-2E42A43A3C94.73f83a</string>
     <key>PayloadVersion</key>
     <integer>1</integer>
-    <key>PayloadOrganization</key>
-    <string>BreakFree</string>
     <key>PayloadContent</key>
     <array>
       <dict>
-        <key>PayloadType</key>
-        <string>com.apple.dnsSettings.managed</string>
-        <key>PayloadVersion</key>
-        <integer>1</integer>
-        <key>PayloadIdentifier</key>
-        <string>com.breakfree.dns.profile.dnsSettings.managed</string>
-        <key>PayloadUUID</key>
-        <string>5FDC1023-ABE6-4E67-B597-9E7F0D7FC702</string>
-        <key>PayloadDisplayName</key>
-        <string>BreakFree DNS</string>
-        <key>PayloadOrganization</key>
-        <string>BreakFree</string>
         <key>DNSSettings</key>
         <dict>
           <key>DNSProtocol</key>
@@ -40,6 +26,44 @@
           <key>ServerURL</key>
           <string>https://apple.dns.nextdns.io/73f83a</string>
         </dict>
+        <key>OnDemandRules</key>
+        <array>
+          <dict>
+            <key>Action</key>
+            <string>EvaluateConnection</string>
+            <key>ActionParameters</key>
+            <array>
+              <dict>
+                <key>DomainAction</key>
+                <string>NeverConnect</string>
+                <key>Domains</key>
+                <array>
+                  <string>dav.orange.fr</string>
+                  <string>vvm.mobistar.be</string>
+                  <string>msg.t-mobile.com</string>
+                  <string>tma.vvm.mone.pan-net.eu</string>
+                  <string>vvm.ee.co.uk</string>
+                </array>
+              </dict>
+            </array>
+          </dict>
+          <dict>
+            <key>Action</key>
+            <string>Connect</string>
+          </dict>
+        </array>
+        <key>PayloadType</key>
+        <string>com.apple.dnsSettings.managed</string>
+        <key>PayloadIdentifier</key>
+        <string>io.nextdns.73f83a.profile.dnsSettings.managed</string>
+        <key>PayloadUUID</key>
+        <string>A1E2F262-DB73-40F6-BD22-2E42A43A3C94.73f83a.dnsSettings.managed</string>
+        <key>PayloadDisplayName</key>
+        <string>BreakFreeDNS</string>
+        <key>PayloadOrganization</key>
+        <string>NextDNS</string>
+        <key>PayloadVersion</key>
+        <integer>1</integer>
       </dict>
     </array>
   </dict>
