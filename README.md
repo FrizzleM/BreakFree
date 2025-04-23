@@ -16,7 +16,8 @@ You can find it in the [Releases](https://github.com/FrizzleM/BreakFree/releases
 It is also available in my [RoutineHub](https://routinehub.co/shortcut/21677/)
 
 ## What are you planning on adding in future versions?
-In the next updates, I will introduce the sideloading app Portal as an option, remaking checkpoint 4, as well as fixing bugs/typos and adding any feature requested by the community.
+BreakFree is getting its biggest update yet in the next update, v1.4. The entire checkpoint system has been restructured for a smoother and more logical flow. A brand new app called Portal replaces E-Sign, making the sideloading process much easier, especially for beginners. The DNS has been rebuilt from the ground up to improve protection, internet speed, and battery life. A new video guide has also been made to match the new steps. This update took a while to finish, but the improvements make it more than worth the wait. The beta is available now on GitHub, and the full release is coming soon.
+
 
 ## License
 This project is licensed under a custom **Personal Use License**.  
