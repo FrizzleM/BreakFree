@@ -1,5 +1,4 @@
 # BreakFree
-![IMG_0148](https://github.com/user-attachments/assets/f41246e5-a3e1-4c1f-bdf2-cf4ae1068844)
 
 A free iOS shortcut that lets you sideload unlimited apps on your iOS and iPadOS device using a DNS and public certificates (given by WSF).
 It works by applying WSF's DNS and using WSF's Portal app to install an installer.
