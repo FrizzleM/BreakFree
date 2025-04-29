@@ -1,8 +1,6 @@
 # What installer should I pick?
 
 Good question, here are my favorite installers:
-- 🔜 Portal
-(Coming soon in v1.4 👀)
 
 - ✅ Feather
 The best option for new users in 2025.
@@ -10,6 +8,11 @@ It is constantly updated with user requested features,
 does not track your data (unlike ESign) and has a much more user friendly interface. 
 The best for beginners. There are some missing features, but they are secondary, 
 therefore unnecessary, and the dev is actually gradually adding most of the user requested features.
+
+- 👍 Portal
+The newest one, added in v1.4 of BreakFree. It has a bit less customization features and
+app installation can take a bit more, but it requires a lot less steps and is overall better
+you're trying to install just a few apps.
 
 - ⚠️ ESign
 This signer is being discontinued by its dev, as well as WSF. Therefore, 
