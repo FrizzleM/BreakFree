@@ -19,8 +19,6 @@ It is also available in my [RoutineHub](https://routinehub.co/shortcut/21677/)
 This method uses the Apple Developer Program and DNSs, two key features that Apple has no plans of removing. Therefore, this method should work on any version, no matter how new it is. Still, the latest tested version where it works is currently iOS 18.4.1
 
 ## What are you planning on adding in future versions?
-The next patch, v1.4.1, will include a video guide for the updated method alongside some optimizations.
-
 The next big update, v1.5, is going to completely remake the process, with it being much faster. The plan is to make it only 3 mandatory checkpoints and 4 total checkpoints, which is much less than the current 6 checkpoints. This speeds up the installation process significantly. Furthermore, a settings system and a lot of optimizations will be added.
 
 ## License
