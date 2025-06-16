@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BreakFree Troubleshooting</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #121212;
+      color: #f1f1f1;
+      margin: 0;
+      padding: 20px;
+    }
+
+    header {
+      background: #1e1e1e;
+      color: #ffffff;
+      padding: 20px 10px;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+    }
+
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: #1a1a1a;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.7);
+    }
+
+    .faq-item {
+      margin-bottom: 20px;
+    }
+
+    .question {
+      font-weight: bold;
+      cursor: pointer;
+      margin-bottom: 5px;
+      color: #00bfff;
+    }
+
+    .answer {
+      display: none;
+      margin-left: 15px;
+      color: #dddddd;
+      margin-top: 10px;
+    }
+
+    .question:hover {
+      color: #1ecbe1;
+    }
+
+    a {
+      color: #1ecbe1;
+      text-decoration: underline;
+    }
+
+    a:hover {
+      color: #4de4ff;
+    }
+
+    .faq-img {
+      max-width: 100%;
+      border-radius: 10px;
+      margin: 10px 0;
+      border: 1px solid #333;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>BreakFree Troubleshooting</h1>
+  </header>
+
+  <div class="container">
+    <div class="faq-item">
+      <div class="question" onclick="toggleAnswer(this)">I got the “Unable to install” error</div>
+      <div class="answer">
+        <img 
+          src="https://raw.githubusercontent.com/FrizzleM/BreakFree/refs/heads/main/FAQ/assets/Screenshot%202025-06-16%20at%2018.58.20.png" 
+          alt="Unable to install error screenshot" 
+          class="faq-img"
+        />
+        <p>
+          This error means Apple has blacklisted you from using that certificate. Try other options, if none of them work you will have to use one of 
+          <a href="https://wsfteam.xyz/guide#fixing-revokes" target="_blank">these</a> methods.
+        </p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="question" onclick="toggleAnswer(this)">My apps crash as soon as I open them!</div>
+      <div class="answer">
+        <p>
+          This error means Apple has blacklisted you from using that certificate. Try other options, if none of them work you will have to use one of 
+          <a href="https://wsfteam.xyz/guide#fixing-revokes" target="_blank">these</a> methods.
+        </p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="question" onclick="toggleAnswer(this)">I want to fix the 2 issues above without resetting my device</div>
+      <div class="answer">
+        <p>
+          With <a href="https://iosbreakfree.carrd.co/#:~:text=PRO.%20ONLY-,7.90%24/YEAR.,-FIND%20OUT%20ABOUT" target="_blank">BreakFree PRO</a>, all sideloading problems will be gone for one year at $7.90. Unlimited apps and constant protection from those issues for an entire year at one of the lowest prices on the market!
+        </p>
+        <p>
+          There are also other methods, such as <a href="https://github.com/jailbreakdotparty/BlacklistBeGone" target="_blank">BlacklistBeGone</a> (iOS 17–18.0.1), which should be able to fix this, but I have not tested them, and I do not recommend using them without being sure they work.
+        </p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="question" onclick="toggleAnswer(this)">What iOS version is compatible with BreakFree?</div>
+      <div class="answer">
+        <p>
+          All iOS versions from iOS 15–18.5. However, the newer the iOS, the higher the chances are to face the first 2 issues.
+        </p>
+        <p>
+          Furthermore, if your iOS is 17 or lower, just use TrollStore, palera1n, or any working method on your device. They are much better.
+        </p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="question" onclick="toggleAnswer(this)">Is it going to work forever, on all iOS updates?</div>
+      <div class="answer">
+        <p>
+          No, I have seen Apple’s first attempts at fixing this on iOS 18.4.1. Therefore, I am sure that someday this method will be fully patched.
+        </p>
+        <p>
+          <a href="https://iosbreakfree.carrd.co/#:~:text=PRO.%20ONLY-,7.90%24/YEAR.,-FIND%20OUT%20ABOUT" target="_blank">BreakFree PRO</a>, on the other hand, uses a completely different approach that Apple authorizes, and will therefore work forever.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleAnswer(el) {
+      const answer = el.nextElementSibling;
+      answer.style.display = answer.style.display === "block" ? "none" : "block";
+    }
+  </script>
+</body>
+</html>
