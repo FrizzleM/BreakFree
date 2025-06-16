@@ -12,4 +12,7 @@ Welcome to my extra tips!
       Apple tries to check your apps before your DNS is turned back off. Just follow the
       procedures above and you'll be fine.
 
+- 3) DO NOT USE VPNS
+      VPNs interfere with the BreakFree DNS that blocks Apple, and using them WILL lead to Apple 
+      blocking you from sideloading. Therefore, avoid VPNS.
 
