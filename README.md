@@ -2,7 +2,7 @@
 ![BreakFree (2)](https://github.com/user-attachments/assets/fc2055fd-eae4-4d53-b5d0-d4c8e9992f64)
 
 A free iOS shortcut that lets you sideload unlimited apps on your iOS and iPadOS device using a DNS and public certificates (given by WSF).
-It works by applying WSF's DNS and using WSF's Portal app to install an installer.
+It works by applying an Apple-blocking DNS and using Enterprise Certificates to install applications.
 
 ## How does it work?
 This shortcut takes different developer certificates leaked from different companies, and uses them on your device. This makes it look like you're part of that company, testing their apps, when you're actually using it for your needs. Apple patched this in 2016 with iOS 10, but users recently realized you can get over the patch by using DNSs, which blocks Apple from spying on you. This is exactly what this shortcut does.
