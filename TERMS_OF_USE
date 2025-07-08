@@ -1,25 +1,24 @@
-# Terms of Use – Educational Purpose Only
+Terms of Use – Educational Purpose Only
 
-This shortcut is provided strictly for **educational purposes**. Any other use — including commercial, malicious, or unlawful use — is neither encouraged nor the responsibility of the author. By using this shortcut, you agree to the following terms:
+This shortcut is provided strictly for educational purposes. Any other use — including commercial, malicious, or unlawful use — is neither encouraged nor the responsibility of the author. By using this shortcut, you agree to the following terms:
 
----
+1. Privacy 
+We respect your privacy. Data collected by this service is handled according to our Privacy Policy. We do not sell your data for commercial gain.
 
-## 1. Permissions
+2. Permissions
 
 You are granted the following rights:
 
-- To download and use this shortcut strictly for **personal, non-commercial, and educational purposes**.
-- To privately modify the shortcut **only for your own personal and educational use**.
-- To share modified versions **exclusively with the original developer (Frizzle)** for feedback or improvement.
-- To share the shortcut **only by linking** to the official GitHub repository or RoutineHub page.
+- To download and use this shortcut strictly for*personal, non-commercial, and educational purposes.
+- To privately modify the shortcut only for your own personal and educational use.
+- To share modified versions exclusively with the original developer (Frizzle) for feedback or improvement.
+- To share the shortcut only by linking to the official GitHub repository or RoutineHub page.
 
-You **may not** share, upload, or distribute the shortcut file itself (original or modified) through any other method or platform.
+You may not share, upload, or distribute the shortcut file itself (original or modified) through any other method or platform.
 
----
+3. Restrictions
 
-## 2. Restrictions
-
-You are **not permitted** to:
+You are not permitted to:
 
 - Redistribute or sell the original or modified shortcut in any form, except when directly communicating with the original developer.
 - Host or share the shortcut file outside of official sources (e.g., GitHub or RoutineHub).
@@ -27,20 +26,20 @@ You are **not permitted** to:
 - Remove, alter, or obscure any copyright,
 credit, or attribution labels.
 
----
 
-## 3. Disclaimer of Liability
 
-This shortcut is provided **“as is”**, without warranties of any kind — including but not limited to fitness for a particular purpose, non-infringement, or compatibility with specific systems.
+4. Disclaimer of Liability
+
+This shortcut is provided “as is”, without warranties of any kind — including but not limited to fitness for a particular purpose, non-infringement, or compatibility with specific systems.
 
 By using this shortcut, you agree that:
 
 - The developer (Frizzle) is not liable for any direct or indirect damages, including but not limited to: data loss, device malfunctions, account restrictions, or legal consequences.
 - Use of this shortcut is entirely at your own risk.
 
----
 
-## 4. Prohibited Uses
+
+5. Prohibited Uses
 
 You may not use this shortcut:
 
@@ -48,6 +47,13 @@ You may not use this shortcut:
 - To bypass or disable security features in ways that violate platform terms of service.
 - In any activity that is unlawful under local, national, or international law.
 
----
+6. BreakFree DNS Logs
 
-**Reminder:** This project is for educational demonstration only. The author does not condone or take responsibility for misuse of any kind.
+When you install BreakFreeDNS (Checkpoint 0), you agree that the domains you visit, as well as the associated IPv4 or IPv6 addresses 
+linked to those domains, may be collected. This data is collected exclusively to research how Apple attempts to interfere with sideloading. 
+The data will not be used for any commercial purpose or for any purpose other than research. Furthermore, the collected IP addresses are not 
+looked up, analyzed, or processed in any way beyond this research purpose.
+The logs are kept for up to 2 years and only contain the domains contacted, not the website sections visited nor the data uploaded or downloaded.
+
+
+Reminder: This project is for educational demonstration only. The author does not condone or take responsibility for misuse of any kind.
