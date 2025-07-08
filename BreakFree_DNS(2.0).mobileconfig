@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ConsentText</key>
+	<dict>
+		<key>default</key>
+		<string>Please consent to this installation!</string>
+	</dict>
+	<key>PayloadContent</key>
+	<array>
+		<dict>
+			<key>DNSSettings</key>
+			<dict>
+				<key>DNSProtocol</key>
+				<string>HTTPS</string>
+				<key>ServerURL</key>
+				<string>https://apple.dns.nextdns.io/73f83a</string>
+			</dict>
+			<key>OnDemandRules</key>
+			<array>
+				<dict>
+					<key>Action</key>
+					<string>EvaluateConnection</string>
+					<key>ActionParameters</key>
+					<array>
+						<dict>
+							<key>DomainAction</key>
+							<string>NeverConnect</string>
+							<key>Domains</key>
+							<array>
+								<string>dav.orange.fr</string>
+								<string>vvm.mobistar.be</string>
+								<string>msg.t-mobile.com</string>
+								<string>tma.vvm.mone.pan-net.eu</string>
+								<string>vvm.ee.co.uk</string>
+							</array>
+						</dict>
+					</array>
+				</dict>
+				<dict>
+					<key>Action</key>
+					<string>Connect</string>
+				</dict>
+			</array>
+			<key>PayloadDisplayName</key>
+			<string>Installation - BreakFreeDNS</string>
+			<key>PayloadIdentifier</key>
+			<string>com.apple.dnsSettings.managed.9C31082A-DA25-4E7E-9684-BF3D03FE5CCB</string>
+			<key>PayloadOrganization</key>
+			<string>NextDNS</string>
+			<key>PayloadType</key>
+			<string>com.apple.dnsSettings.managed</string>
+			<key>PayloadUUID</key>
+			<string>9C31082A-DA25-4E7E-9684-BF3D03FE5CCB</string>
+			<key>PayloadVersion</key>
+			<integer>1</integer>
+			<key>ProhibitDisablement</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>DNSSettings</key>
+			<dict>
+				<key>DNSProtocol</key>
+				<string>HTTPS</string>
+				<key>ServerURL</key>
+				<string>https://apple.dns.nextdns.io/2e45ac</string>
+			</dict>
+			<key>PayloadDisplayName</key>
+			<string>Standard - BreakFreeDNS</string>
+			<key>PayloadIdentifier</key>
+			<string>com.apple.dnsSettings.managed.42B3A7DD-7B0E-4070-8AD8-A6FEE0A3457E</string>
+			<key>PayloadType</key>
+			<string>com.apple.dnsSettings.managed</string>
+			<key>PayloadUUID</key>
+			<string>42B3A7DD-7B0E-4070-8AD8-A6FEE0A3457E</string>
+			<key>PayloadVersion</key>
+			<integer>1</integer>
+			<key>ProhibitDisablement</key>
+			<false/>
+		</dict>
+	</array>
+	<key>PayloadDescription</key>
+	<string>A config profile by Frizzle that stops Apple from spying your sideloaded apps!</string>
+	<key>PayloadDisplayName</key>
+	<string>BreakFreeDNS</string>
+	<key>PayloadIdentifier</key>
+	<string>MacBook-Pro-di-Tommaso.59F663DD-5AC1-4E7B-A2FA-7B42E8E6370C</string>
+	<key>PayloadOrganization</key>
+	<string>Frizzle</string>
+	<key>PayloadScope</key>
+	<string>User</string>
+	<key>PayloadType</key>
+	<string>Configuration</string>
+	<key>PayloadUUID</key>
+	<string>59F663DD-5AC1-4E7B-A2FA-7B42E8E6370C</string>
+	<key>PayloadVersion</key>
+	<integer>1</integer>
+	<key>TargetDeviceType</key>
+	<integer>1</integer>
+</dict>
+</plist>
