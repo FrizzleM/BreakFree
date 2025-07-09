@@ -16,12 +16,10 @@ You can find it in the [Releases](https://github.com/FrizzleM/BreakFree/releases
 It is also available in my [RoutineHub](https://routinehub.co/shortcut/21677/)
 
 ## iOS 18.X just released, is it still compatible?
-This method uses the Apple Developer Program and DNSs, two key features that Apple has no plans of removing. Therefore, this method should work on any version, no matter how new it is. Still, the latest tested version where it works is currently iOS 18.4.1
+This method uses the Apple Developer Program and DNSs, two key features that Apple has no plans of removing. Therefore, this method should work on any version, no matter how new it is. Still, the latest tested version where it works is currently iOS 18.5 and 18.6 beta.
 
 ## What are you planning on adding in future versions?
-The next big update, v1.6, will have a complete remake of the UI, making it more user friendly than ever. It will also contain 2 new installer options
-- E-Sign (yes, it's coming back!)
-- KSign 
+The next big update, v2, will change BreakFree immensely. With a new UI, 2 new installers, a revisioned DNS and a huge list of optimizations, it is going to recieve its biggest update ever.
 
 ## License
 This project is licensed under a custom **Educational Use License**.  
