@@ -20,6 +20,7 @@ This method uses the Apple Developer Program and DNSs, two key features that App
 
 ## What are you planning on adding in future versions?
 The next big update, v2, will change BreakFree immensely. With a new UI, 2 new installers, a revisioned DNS and a huge list of optimizations, it is going to recieve its biggest update ever.
+Release date: this Friday!
 
 ## License
 This project is licensed under a custom **Educational Use License**.  
