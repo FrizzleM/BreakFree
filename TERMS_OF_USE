@@ -34,11 +34,10 @@ You may not use this shortcut:
 - In any activity that is unlawful under local, national, or international law.
 
 6. BreakFree DNS Logs
-When you install BreakFreeDNS (Checkpoint 0), you agree that the domains you visit, as well as the associated IPv4 or IPv6 addresses 
-linked to those domains, may be collected. This data is collected exclusively to research how Apple attempts to interfere with sideloading. 
-The data will not be used for any commercial purpose or for any purpose other than research. Furthermore, the collected IP addresses are not 
-looked up, analyzed, or processed in any way beyond this research purpose.
-The logs are kept for up to 2 years and only contain the domains contacted, not the website sections visited nor the data uploaded or downloaded.
+When you install BreakFreeDNS (Checkpoint 0), you agree that the domains you visit may be collected. This data is collected fully anonymously and 
+exclusively to research how Apple attempts to interfere with sideloading. 
+The data will not be used for any commercial purpose or for any purpose other than research. IPs are not collected, thus cannot be sold.
+The logs are kept for up to 2 years and only contain the domains contacted, not the website sections visited nor the data uploaded or downloaded thanks to https.
 
 7. Modification
 We reserve the right to modify these Terms of Service at any time. Changes will be posted on this page. Continued use of the service constitutes 
