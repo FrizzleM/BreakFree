@@ -16,7 +16,7 @@ You can find it in the [Releases](https://github.com/FrizzleM/BreakFree/releases
 It is also available in my [RoutineHub](https://routinehub.co/shortcut/21677/)
 
 ## iOS 26.X.X just released, is it still compatible?
-This method uses the Apple Developer Program and DNSs, two key features that Apple has no plans of removing. Therefore, this method should work on any version, no matter how new it is. Still, the latest tested version where it works is currently iOS 26.0.1.
+This method uses the Apple Developer Program and DNSs, two key features that Apple has no plans of removing. Therefore, this method should work on any version, no matter how new it is. Still, the latest tested version where it works is currently iOS 26.1 and 26.2 beta.
 
 
 ## License
