@@ -26,5 +26,15 @@ Install $name
 "
 done
 
-sed "s~{{PLIST_BLOCKS}}~$plist_blocks~" "$TEMPLATE" > "$OUTPUT"
+# SAFE multi-line replacement using printf
+awk -v blocks="$plist_blocks" '
+    {
+        if ($0 ~ /{{PLIST_BLOCKS}}/) {
+            print blocks
+        } else {
+            print $0
+        }
+    }
+' "$TEMPLATE" > "$OUTPUT"
+
 echo "Generated $OUTPUT"
