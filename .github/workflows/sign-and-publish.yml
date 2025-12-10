@@ -3,7 +3,7 @@ name: Sign IPAs and publish OTA
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 */6 * * *"  # runs every 6 hours
+    - cron: "0 */6 * * *"  # every 6 hours
 
 permissions:
   contents: write
@@ -16,7 +16,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Create output folder
+      - name: Prepare output directory
         run: |
           mkdir -p Feather/output
 
@@ -29,18 +29,12 @@ jobs:
           curl -L "https://raw.githubusercontent.com/WhySooooFurious/Ultimate-Sideloading-Guide/refs/heads/main/raw-files/certificates.zip" -o certificates.zip
           mkdir certs
           unzip -q certificates.zip -d certs
-          
-      - name: Debug extracted certificates
+
+      - name: Fix file permissions (critical for macOS signing)
         run: |
-          echo "=== Certificate Tree ==="
-          find certs -maxdepth 4 | sort
+          find certs -type f -name "*.p12" -exec chmod 644 {} \;
+          find certs -type f -name "*.mobileprovision" -exec chmod 644 {} \;
 
-          echo "=== P12 File Sizes ==="
-          find certs -type f -name "*.p12" -exec ls -l {} \;
-
-          echo "=== Chiba Folder Contents ==="
-          ls -l certs/Certificates/Chiba || true
-          
       - name: Make scripts executable
         run: |
           chmod +x scripts/resign_ipa.sh
@@ -49,7 +43,7 @@ jobs:
 
       - name: Sign IPAs and generate plists
         run: |
-          for p12 in $(find certs -name "*.p12"); do
+          for p12 in $(find certs -type f -name "*.p12" ! -path "*/__MACOSX/*"); do
             basename="$(basename "$p12" .p12)"
             cert_dir="$(dirname "$p12")"
             profile="$cert_dir/${basename}.mobileprovision"
