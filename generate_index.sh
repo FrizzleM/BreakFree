@@ -26,7 +26,6 @@ Install $name
 "
 done
 
-# SAFE multi-line replacement using printf
 awk -v blocks="$plist_blocks" '
     {
         if ($0 ~ /{{PLIST_BLOCKS}}/) {
