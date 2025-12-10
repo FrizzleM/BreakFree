@@ -3,7 +3,7 @@ name: Sign IPAs and publish OTA
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 12 * * *"  # every day at 12:00 UTC
+    - cron: "0 */6 * * *"  # every 6 hours (change if you want)
 
 permissions:
   contents: write
@@ -13,10 +13,10 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Prepare folders
+      - name: Prepare output directory
         run: |
           mkdir -p Feather/output
 
@@ -24,17 +24,20 @@ jobs:
         run: |
           curl -L "https://files.catbox.moe/15nd3m.ipa" -o base.ipa
 
-      - name: Download certificates zip
+      - name: Download certificates ZIP
         run: |
           curl -L "https://raw.githubusercontent.com/WhySooooFurious/Ultimate-Sideloading-Guide/refs/heads/main/raw-files/certificates.zip" -o certificates.zip
           mkdir certs
           unzip -q certificates.zip -d certs
 
-      - name: Sign missing IPAs and generate plists
+      - name: Make resigning scripts executable
         run: |
           chmod +x scripts/resign_ipa.sh
           chmod +x scripts/generate_plist.sh
+          chmod +x generate_index.sh
 
+      - name: Resign missing IPAs + generate plists
+        run: |
           for p12 in $(find certs -name "*.p12"); do
             basename="$(basename "$p12" .p12)"
             IPA_OUT="Feather/output/${basename}.ipa"
@@ -45,16 +48,15 @@ jobs:
               continue
             fi
 
-            echo "Signing base IPA with cert $basename..."
-            ./scripts/resign_ipa.sh base.ipa "$p12" "WSF" "$IPA_OUT"
+            echo "Signing IPA with cert: $basename"
+            ./scripts/resign_ipa.sh base.ipa "$p12" "WSF" "certs" "$IPA_OUT"
 
-            echo "Generating plist for $IPA_OUT..."
+            echo "Generating plist for: $basename"
             ./scripts/generate_plist.sh "$IPA_OUT" "$PLIST_OUT"
           done
 
-      - name: Regenerate index.html
+      - name: Regenerate OTA index.html
         run: |
-          chmod +x generate_index.sh
           ./generate_index.sh
 
       - name: Commit and push changes
@@ -71,5 +73,5 @@ jobs:
             exit 0
           fi
 
-          git commit -m "Auto-sign IPAs and update OTA index"
+          git commit -m "Auto-sign IPAs, generate plists, and update OTA index"
           git push

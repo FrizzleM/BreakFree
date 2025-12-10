@@ -4,7 +4,8 @@ set -euo pipefail
 BASE_IPA="$1"
 P12_FILE="$2"
 P12_PASSWORD="$3"
-OUTPUT_IPA="$4"
+PROFILES_DIR="$4"
+OUTPUT_IPA="$5"
 
 WORK_DIR="$(mktemp -d)"
 KEYCHAIN="$WORK_DIR/build.keychain-db"
@@ -27,6 +28,23 @@ if [ -z "$APP_PATH" ]; then
   echo "No .app found inside IPA"
   exit 1
 fi
+
+# pick matching .mobileprovision: same basename as p12 if possible, otherwise first one
+base_name="$(basename "$P12_FILE" .p12)"
+PROFILE="$PROFILES_DIR/$base_name.mobileprovision"
+
+if [ ! -f "$PROFILE" ]; then
+  echo "No matching $base_name.mobileprovision, using first .mobileprovision in $PROFILES_DIR"
+  PROFILE="$(find "$PROFILES_DIR" -maxdepth 1 -name "*.mobileprovision" | head -n 1 || true)"
+fi
+
+if [ -z "${PROFILE:-}" ] || [ ! -f "$PROFILE" ]; then
+  echo "No .mobileprovision found for $P12_FILE"
+  exit 1
+fi
+
+echo "Using provisioning profile: $PROFILE"
+cp "$PROFILE" "$APP_PATH/embedded.mobileprovision"
 
 ENTITLEMENTS_PLIST="$WORK_DIR/entitlements.plist"
 if codesign -d --entitlements :- "$APP_PATH" > "$ENTITLEMENTS_PLIST" 2>/dev/null; then
