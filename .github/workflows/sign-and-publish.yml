@@ -29,7 +29,15 @@ jobs:
           curl -L "https://raw.githubusercontent.com/WhySooooFurious/Ultimate-Sideloading-Guide/refs/heads/main/raw-files/certificates.zip" -o certificates.zip
           mkdir certs
           unzip -q certificates.zip -d certs
-
+          
+      - name: Compute SHA256 of p12 files
+        run: |
+          echo "=== SHA256 HASHES OF ALL P12 FILES ==="
+          find certs -type f -name "*.p12" ! -path "*/__MACOSX/*" -exec sh -c '
+            echo -n "$1: "
+            shasum -a 256 "$1"
+          ' _ {} \;
+          
       - name: Fix file permissions (critical for macOS signing)
         run: |
           find certs -type f -name "*.p12" -exec chmod 644 {} \;
