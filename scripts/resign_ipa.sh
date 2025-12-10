@@ -4,7 +4,7 @@ set -euo pipefail
 BASE_IPA="$1"
 P12_FILE="$2"
 P12_PASSWORD="$3"
-PROFILES_DIR="$4"
+PROFILE="$4"
 OUTPUT_IPA="$5"
 
 WORK_DIR="$(mktemp -d)"
@@ -29,17 +29,8 @@ if [ -z "$APP_PATH" ]; then
   exit 1
 fi
 
-# pick matching .mobileprovision: same basename as p12 if possible, otherwise first one
-base_name="$(basename "$P12_FILE" .p12)"
-PROFILE="$PROFILES_DIR/$base_name.mobileprovision"
-
-if [ ! -f "$PROFILE" ]; then
-  echo "No matching $base_name.mobileprovision, using first .mobileprovision in $PROFILES_DIR"
-  PROFILE="$(find "$PROFILES_DIR" -maxdepth 1 -name "*.mobileprovision" | head -n 1 || true)"
-fi
-
 if [ -z "${PROFILE:-}" ] || [ ! -f "$PROFILE" ]; then
-  echo "No .mobileprovision found for $P12_FILE"
+  echo "Provisioning profile not found: $PROFILE"
   exit 1
 fi
 
