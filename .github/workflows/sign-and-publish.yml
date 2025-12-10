@@ -3,7 +3,7 @@ name: Sign IPAs and publish OTA
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 */6 * * *"  # every 6 hours (change if you want)
+    - cron: "0 */6 * * *"  # runs every 6 hours
 
 permissions:
   contents: write
@@ -16,7 +16,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Prepare output directory
+      - name: Create output folder
         run: |
           mkdir -p Feather/output
 
@@ -30,32 +30,35 @@ jobs:
           mkdir certs
           unzip -q certificates.zip -d certs
 
-      - name: Make resigning scripts executable
+      - name: Make scripts executable
         run: |
           chmod +x scripts/resign_ipa.sh
           chmod +x scripts/generate_plist.sh
           chmod +x generate_index.sh
 
-      - name: Resign missing IPAs + generate plists
+      - name: Sign IPAs and generate plists
         run: |
           for p12 in $(find certs -name "*.p12"); do
             basename="$(basename "$p12" .p12)"
+            cert_dir="$(dirname "$p12")"
+            profile="$cert_dir/${basename}.mobileprovision"
+
             IPA_OUT="Feather/output/${basename}.ipa"
             PLIST_OUT="Feather/output/${basename}.plist"
 
             if [ -f "$IPA_OUT" ] && [ -f "$PLIST_OUT" ]; then
-              echo "Already have $IPA_OUT and $PLIST_OUT, skipping"
+              echo "Already exists: $basename (skipping)"
               continue
             fi
 
             echo "Signing IPA with cert: $basename"
-            ./scripts/resign_ipa.sh base.ipa "$p12" "WSF" "certs" "$IPA_OUT"
+            ./scripts/resign_ipa.sh base.ipa "$p12" "WSF" "$profile" "$IPA_OUT"
 
             echo "Generating plist for: $basename"
             ./scripts/generate_plist.sh "$IPA_OUT" "$PLIST_OUT"
           done
 
-      - name: Regenerate OTA index.html
+      - name: Regenerate index.html
         run: |
           ./generate_index.sh
 
@@ -73,5 +76,5 @@ jobs:
             exit 0
           fi
 
-          git commit -m "Auto-sign IPAs, generate plists, and update OTA index"
+          git commit -m "Auto-sign IPAs, generate plists, update OTA index"
           git push
