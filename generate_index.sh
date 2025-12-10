@@ -26,5 +26,5 @@ Install $name
 "
 done
 
-sed "s|{{PLIST_BLOCKS}}|$plist_blocks|" "$TEMPLATE" > "$OUTPUT"
+sed "s~{{PLIST_BLOCKS}}~$plist_blocks~" "$TEMPLATE" > "$OUTPUT"
 echo "Generated $OUTPUT"
