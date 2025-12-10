@@ -1,93 +1,125 @@
-name: Sign IPAs and publish OTA
+#!/bin/bash
+set -euo pipefail
 
-on:
-  workflow_dispatch:
-  schedule:
-    - cron: "0 */6 * * *"  # every 6 hours
+BASE_IPA="$1"
+P12_FILE="$2"
+P12_PASSWORD="$3"
+PROFILE="$4"
+OUTPUT_IPA="$5"
 
-permissions:
-  contents: write
+WORK_DIR="$(mktemp -d)"
+KEYCHAIN="$WORK_DIR/temp-signing.keychain-db"
+KC_PASSWORD="temp123"
 
-jobs:
-  sign-and-publish:
-    runs-on: macos-latest
+echo "Working directory: $WORK_DIR"
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+############################################################
+# Create + unlock a temporary keychain (must use real pass)
+############################################################
 
-      - name: Prepare output directory
-        run: |
-          mkdir -p Feather/output
+echo "Creating temporary keychain..."
+security create-keychain -p "$KC_PASSWORD" "$KEYCHAIN"
+security set-keychain-settings -lut 7200 "$KEYCHAIN"
+security unlock-keychain -p "$KC_PASSWORD" "$KEYCHAIN"
 
-      - name: Download base IPA
-        run: |
-          curl -L "https://files.catbox.moe/15nd3m.ipa" -o base.ipa
+# Activate this keychain *exclusively* for this script
+security list-keychain -d user -s "$KEYCHAIN"
 
-      - name: Download certificates ZIP
-        run: |
-          curl -L "https://raw.githubusercontent.com/WhySooooFurious/Ultimate-Sideloading-Guide/refs/heads/main/raw-files/certificates.zip" -o certificates.zip
-          mkdir certs
-          unzip -q certificates.zip -d certs
-          
-      - name: Compute SHA256 of p12 files
-        run: |
-          echo "=== SHA256 HASHES OF ALL P12 FILES ==="
-          find certs -type f -name "*.p12" ! -path "*/__MACOSX/*" -exec sh -c '
-            echo -n "$1: "
-            shasum -a 256 "$1"
-          ' _ {} \;
-          
-      - name: Fix file permissions (critical for macOS signing)
-        run: |
-          find certs -type f -name "*.p12" -exec chmod 644 {} \;
-          find certs -type f -name "*.mobileprovision" -exec chmod 644 {} \;
+############################################################
+# Import the .p12 certificate into the keychain
+############################################################
 
-      - name: Make scripts executable
-        run: |
-          chmod +x scripts/resign_ipa.sh
-          chmod +x scripts/generate_plist.sh
-          chmod +x generate_index.sh
+echo "Importing certificate: $P12_FILE"
 
-      - name: Sign IPAs and generate plists
-        run: |
-          for p12 in $(find certs -type f -name "*.p12" ! -path "*/__MACOSX/*"); do
-            basename="$(basename "$p12" .p12)"
-            cert_dir="$(dirname "$p12")"
-            profile="$cert_dir/${basename}.mobileprovision"
+security import "$P12_FILE" \
+    -k "$KEYCHAIN" \
+    -P "$P12_PASSWORD" \
+    -A \
+    -T /usr/bin/codesign \
+    -T /usr/bin/security
 
-            IPA_OUT="Feather/output/${basename}.ipa"
-            PLIST_OUT="Feather/output/${basename}.plist"
+############################################################
+# Extract IPA
+############################################################
 
-            if [ -f "$IPA_OUT" ] && [ -f "$PLIST_OUT" ]; then
-              echo "Already exists: $basename (skipping)"
-              continue
-            fi
+mkdir -p "$WORK_DIR/ipa"
+unzip -q "$BASE_IPA" -d "$WORK_DIR/ipa"
 
-            echo "Signing IPA with cert: $basename"
-            ./scripts/resign_ipa.sh base.ipa "$p12" "WSF" "$profile" "$IPA_OUT"
+APP_PATH="$(find "$WORK_DIR/ipa/Payload" -maxdepth 1 -name "*.app" | head -n 1)"
+if [[ -z "$APP_PATH" ]]; then
+    echo "Error: No .app bundle found inside IPA."
+    exit 1
+fi
 
-            echo "Generating plist for: $basename"
-            ./scripts/generate_plist.sh "$IPA_OUT" "$PLIST_OUT"
-          done
+############################################################
+# Insert provisioning profile
+############################################################
 
-      - name: Regenerate index.html
-        run: |
-          ./generate_index.sh
+if [[ ! -f "$PROFILE" ]]; then
+    echo "Error: Provisioning profile not found: $PROFILE"
+    exit 1
+fi
 
-      - name: Commit and push changes
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          git config user.name "github-actions"
-          git config user.email "actions@github.com"
+echo "Embedding provisioning profile: $PROFILE"
+cp "$PROFILE" "$APP_PATH/embedded.mobileprovision"
 
-          git add Feather/output/*.ipa Feather/output/*.plist index.html 2>/dev/null || true
+############################################################
+# Extract entitlements (optional)
+############################################################
 
-          if git diff --cached --quiet; then
-            echo "No changes to commit"
-            exit 0
-          fi
+ENTITLEMENTS="$WORK_DIR/entitlements.plist"
+if codesign -d --entitlements :- "$APP_PATH" > "$ENTITLEMENTS" 2>/dev/null; then
+    echo "Extracted entitlements."
+else
+    echo "Warning: Could not extract entitlements. Signing without explicit entitlements."
+    rm -f "$ENTITLEMENTS"
+fi
 
-          git commit -m "Auto-sign IPAs, generate plists, update OTA index"
-          git push
+############################################################
+# Remove old signature
+############################################################
+
+rm -rf "$APP_PATH/_CodeSignature"
+
+############################################################
+# Determine signing identity
+############################################################
+
+IDENTITY=$(security find-identity -p codesigning -v "$KEYCHAIN" | head -n 1 | awk -F'"' '{print $2}')
+
+if [[ -z "${IDENTITY:-}" ]]; then
+    echo "Error: No signing identity found in imported certificate."
+    exit 1
+fi
+
+echo "Using signing identity: $IDENTITY"
+
+############################################################
+# Perform the signing
+############################################################
+
+if [[ -f "$ENTITLEMENTS" ]]; then
+    codesign -f -s "$IDENTITY" --entitlements "$ENTITLEMENTS" --deep "$APP_PATH"
+else
+    codesign -f -s "$IDENTITY" --deep "$APP_PATH"
+fi
+
+############################################################
+# Repackage IPA
+############################################################
+
+pushd "$WORK_DIR/ipa" >/dev/null
+zip -qry "$WORK_DIR/signed.ipa" Payload
+popd >/dev/null
+
+mkdir -p "$(dirname "$OUTPUT_IPA")"
+mv "$WORK_DIR/signed.ipa" "$OUTPUT_IPA"
+
+############################################################
+# Cleanup
+############################################################
+
+security delete-keychain "$KEYCHAIN" || true
+rm -rf "$WORK_DIR"
+
+echo "Signed IPA written to: $OUTPUT_IPA"
