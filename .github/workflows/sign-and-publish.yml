@@ -29,7 +29,18 @@ jobs:
           curl -L "https://raw.githubusercontent.com/WhySooooFurious/Ultimate-Sideloading-Guide/refs/heads/main/raw-files/certificates.zip" -o certificates.zip
           mkdir certs
           unzip -q certificates.zip -d certs
+          
+      - name: Debug extracted certificates
+        run: |
+          echo "=== Certificate Tree ==="
+          find certs -maxdepth 4 | sort
 
+          echo "=== P12 File Sizes ==="
+          find certs -type f -name "*.p12" -exec ls -l {} \;
+
+          echo "=== Chiba Folder Contents ==="
+          ls -l certs/Certificates/Chiba || true
+          
       - name: Make scripts executable
         run: |
           chmod +x scripts/resign_ipa.sh
