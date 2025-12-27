@@ -1,7 +1,6 @@
 #!/bin/bash
 set -euo pipefail
 
-
 BASE_IPA="$1"
 P12_FILE="$2"
 PROFILE="$3"
