@@ -1,0 +1,46 @@
+name: ios-resign
+
+# This workflow resigns a built IPA using the ios-resign GitHub Action.
+# To trigger manually, click "Run workflow" from the Actions tab or push a new IPA.
+
+on:
+  # Manual trigger
+  workflow_dispatch: {}
+  # Automatically re-sign whenever a new unsigned IPA is committed
+  push:
+    paths:
+      - 'Feather/output/featherunsigned.ipa'
+
+jobs:
+  resign:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Ensure the unsigned IPA is present. If you build the app in a separate job,
+      # point `ipa_path` below to that IPA. Here we assume the unsigned IPA is
+      # stored in Feather/output/featherunsigned.ipa
+      - name: Verify unsigned IPA exists
+        run: |
+          if [ ! -f Feather/output/featherunsigned.ipa ]; then
+            echo "Unsigned IPA not found at Feather/output/featherunsigned.ipa" >&2
+            exit 1
+          fi
+
+      - name: Resign IPA using ios-resign action
+        uses: bradyjoslin/ios-resign-action@v1
+        with:
+          ipa_path: Feather/output/featherunsigned.ipa
+          mobileprovision: ${{ secrets.MOBILEPROVISION }}
+          cert_p12: ${{ secrets.CERT_P12 }}
+          p12_pass: ${{ secrets.P12_PASS }}
+          signing_identity: ${{ secrets.SIGNING_IDENTITY }}
+
+      # Upload the re-signed IPA as a workflow artifact
+      - name: Upload resigned IPA
+        uses: actions/upload-artifact@v3
+        with:
+          name: resigned-ipa
+          path: |
+            ./**.ipa
