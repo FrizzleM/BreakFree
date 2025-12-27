@@ -12,30 +12,34 @@ BASE_URL="https://raw.githubusercontent.com/$GITHUB_USER/$GITHUB_REPO/main/Feath
 TEMPLATE="$ROOT_DIR/template.html"
 OUTPUT="$ROOT_DIR/index.html"
 
-plist_blocks=""
+BLOCKS_FILE="$(mktemp)"
 
 for plist in $(ls "$PLIST_FOLDER"/*.plist 2>/dev/null | sort); do
-  filename=$(basename "$plist")
+  filename="$(basename "$plist")"
   name="${filename%.plist}"
 
-  plist_blocks+="<div class=\"plist-item\">
+  cat >> "$BLOCKS_FILE" <<EOF
+<div class="plist-item">
 <strong>$name</strong><br>
-<a href=\"itms-services://?action=download-manifest&url=$BASE_URL/$filename\">
+<a href="itms-services://?action=download-manifest&url=$BASE_URL/$filename">
 Install $name
 </a>
 </div>
 
-"
+EOF
 done
 
-awk -v blocks="$plist_blocks" '
+awk -v f="$BLOCKS_FILE" '
   {
     if ($0 ~ /{{PLIST_BLOCKS}}/) {
-      print blocks
+      while ((getline line < f) > 0) print line
+      close(f)
     } else {
-      print $0
+      print
     }
   }
 ' "$TEMPLATE" > "$OUTPUT"
+
+rm -f "$BLOCKS_FILE"
 
 echo "Generated $OUTPUT"
