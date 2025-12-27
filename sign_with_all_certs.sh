@@ -9,6 +9,7 @@ UNSIGNED_IPA_URL="https://github.com/FrizzleM/BreakFree/raw/refs/heads/main/Feat
 
 P12_PASSWORD="WSF"
 KC_PASSWORD="temp123"
+FORCED_BUNDLE_ID="kh.crysalis.feather"
 
 TMP_DIR="$(mktemp -d)"
 CERT_DIR="$TMP_DIR/certificates"
@@ -73,6 +74,12 @@ for CERT_PATH in "$CERT_DIR"/*; do
         security delete-keychain "$KEYCHAIN"
         FAILED=$((FAILED+1))
         continue
+    fi
+
+    INFO_PLIST="$APP_PATH/Info.plist"
+
+    if ! /usr/libexec/PlistBuddy -c "Set :CFBundleIdentifier $FORCED_BUNDLE_ID" "$INFO_PLIST" 2>/dev/null; then
+        /usr/libexec/PlistBuddy -c "Add :CFBundleIdentifier string $FORCED_BUNDLE_ID" "$INFO_PLIST"
     fi
 
     cp "$PROFILE" "$APP_PATH/embedded.mobileprovision"
