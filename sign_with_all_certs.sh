@@ -19,10 +19,10 @@ echo "[*] Root dir: $ROOT_DIR"
 echo "[*] Output dir: $OUTPUT_DIR"
 echo "[*] Temp dir: $TMP_DIR"
 
-curl -L "$CERT_ZIP_URL" -o "$TMP_DIR/certificates.zip"
-curl -L "$UNSIGNED_IPA_URL" -o "$TMP_DIR/unsigned.ipa"
+curl -L "$CERT_ZIP_URL" -o "$TMP_DIR/certificates.zip" || exit 1
+curl -L "$UNSIGNED_IPA_URL" -o "$TMP_DIR/unsigned.ipa" || exit 1
 
-unzip -q "$TMP_DIR/certificates.zip" -d "$TMP_DIR"
+unzip -q "$TMP_DIR/certificates.zip" -d "$TMP_DIR" || exit 1
 
 SUCCESS=0
 FAILED=0

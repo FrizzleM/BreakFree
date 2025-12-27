@@ -1,30 +1,55 @@
 #!/bin/bash
 set -euo pipefail
 
-IPA_PATH="$1"
-PLIST_OUT="$2"
+ROOT_DIR="${GITHUB_WORKSPACE:-$(pwd)}"
+OUTPUT_DIR="$ROOT_DIR/Feather/output"
 
-GITHUB_USER="FrizzleM"
-GITHUB_REPO="BreakFree"
-IPA_FILENAME="$(basename "$IPA_PATH")"
-IPA_URL="https://raw.githubusercontent.com/$GITHUB_USER/$GITHUB_REPO/main/Feather/output/$IPA_FILENAME"
+GITHUB_USER="${GITHUB_USER:-FrizzleM}"
+GITHUB_REPO="${GITHUB_REPO:-BreakFree}"
 
-TMPDIR="$(mktemp -d)"
-unzip -q "$IPA_PATH" -d "$TMPDIR"
+generate_one() {
+  local IPA_PATH="$1"
+  local PLIST_OUT="$2"
 
-APP_PATH="$(find "$TMPDIR/Payload" -maxdepth 1 -name "*.app" | head -n 1)"
-if [ -z "$APP_PATH" ]; then
-  echo "No .app found inside IPA while generating plist"
-  exit 1
-fi
+  local IPA_FILENAME
+  IPA_FILENAME="$(basename "$IPA_PATH")"
 
-INFO_PLIST="$APP_PATH/Info.plist"
+  local IPA_URL
+  IPA_URL="https://raw.githubusercontent.com/$GITHUB_USER/$GITHUB_REPO/main/Feather/output/$IPA_FILENAME"
 
-BUNDLE_ID=$(/usr/libexec/PlistBuddy -c "Print :CFBundleIdentifier" "$INFO_PLIST")
-BUNDLE_VERSION=$(/usr/libexec/PlistBuddy -c "Print :CFBundleShortVersionString" "$INFO_PLIST" 2>/dev/null || echo "1.0")
-TITLE=$(/usr/libexec/PlistBuddy -c "Print :CFBundleDisplayName" "$INFO_PLIST" 2>/dev/null || /usr/libexec/PlistBuddy -c "Print :CFBundleName" "$INFO_PLIST" 2>/dev/null || echo "$IPA_FILENAME")
+  local TMPDIR
+  TMPDIR="$(mktemp -d)"
 
-cat > "$PLIST_OUT" <<EOF
+  if ! unzip -q "$IPA_PATH" -d "$TMPDIR"; then
+    rm -rf "$TMPDIR"
+    echo "[!] Failed to unzip IPA: $IPA_FILENAME"
+    return 1
+  fi
+
+  local APP_PATH
+  APP_PATH="$(find "$TMPDIR/Payload" -maxdepth 1 -name "*.app" | head -n 1)"
+
+  if [[ -z "${APP_PATH:-}" ]]; then
+    rm -rf "$TMPDIR"
+    echo "[!] No .app found inside: $IPA_FILENAME"
+    return 1
+  fi
+
+  local INFO_PLIST
+  INFO_PLIST="$APP_PATH/Info.plist"
+
+  local BUNDLE_ID BUNDLE_VERSION TITLE
+  BUNDLE_ID=$(/usr/libexec/PlistBuddy -c "Print :CFBundleIdentifier" "$INFO_PLIST" 2>/dev/null || echo "")
+  BUNDLE_VERSION=$(/usr/libexec/PlistBuddy -c "Print :CFBundleShortVersionString" "$INFO_PLIST" 2>/dev/null || echo "1.0")
+  TITLE=$(/usr/libexec/PlistBuddy -c "Print :CFBundleDisplayName" "$INFO_PLIST" 2>/dev/null || /usr/libexec/PlistBuddy -c "Print :CFBundleName" "$INFO_PLIST" 2>/dev/null || echo "$IPA_FILENAME")
+
+  if [[ -z "$BUNDLE_ID" ]]; then
+    rm -rf "$TMPDIR"
+    echo "[!] Missing CFBundleIdentifier in: $IPA_FILENAME"
+    return 1
+  fi
+
+  cat > "$PLIST_OUT" <<EOF
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
@@ -58,6 +83,38 @@ cat > "$PLIST_OUT" <<EOF
 </plist>
 EOF
 
-rm -rf "$TMPDIR"
+  rm -rf "$TMPDIR"
+  echo "[✓] Generated plist: $(basename "$PLIST_OUT")"
+}
 
-echo "Generated plist at $PLIST_OUT"
+mkdir -p "$OUTPUT_DIR"
+
+if [[ $# -ge 2 ]]; then
+  generate_one "$1" "$2"
+  exit $?
+fi
+
+shopt -s nullglob
+IPA_FILES=("$OUTPUT_DIR"/*.ipa)
+shopt -u nullglob
+
+if [[ ${#IPA_FILES[@]} -eq 0 ]]; then
+  echo "[!] No .ipa files found in $OUTPUT_DIR"
+  exit 0
+fi
+
+SUCCESS=0
+FAILED=0
+
+for ipa in "${IPA_FILES[@]}"; do
+  plist_out="${ipa%.ipa}.plist"
+  if generate_one "$ipa" "$plist_out"; then
+    SUCCESS=$((SUCCESS+1))
+  else
+    FAILED=$((FAILED+1))
+  fi
+done
+
+echo "[✓] Plist generation done"
+echo "[✓] Successful: $SUCCESS"
+echo "[!] Failed: $FAILED"
