@@ -1,0 +1,27 @@
+name: sync_feather
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Make scripts executable
+        run: |
+          chmod +x sign_with_all_certs.sh
+          chmod +x generate_plist.sh
+          chmod +x generate_index.sh
+
+      - name: Sign IPA with all certificates
+        run: ./sign_with_all_certs.sh
+
+      - name: Generate OTA plist files
+        run: ./generate_plist.sh
+
+      - name: Generate index.html
+        run: ./generate_index.sh
