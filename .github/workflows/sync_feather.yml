@@ -11,7 +11,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0   # required for pushing
+          fetch-depth: 0
 
       - name: Make scripts executable
         run: |
