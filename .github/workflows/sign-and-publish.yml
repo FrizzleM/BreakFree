@@ -1,124 +1,110 @@
 #!/bin/bash
 set -euo pipefail
 
-BASE_IPA="$1"
-P12_FILE="$2"
-PROFILE="$3"
-OUTPUT_IPA="$4"
+# =========================================
+# CONFIGURATION
+# =========================================
 
-# ============================
-# Fixed .p12 password
-# ============================
-
+ZIP_URL="https://raw.githubusercontent.com/WhySooooFurious/Ultimate-Sideloading-Guide/refs/heads/main/raw-files/certificates.zip"
+IPA_URL="https://github.com/FrizzleM/BreakFree/raw/refs/heads/main/Feather/featherunsigned.ipa"
+OUT_DIR="/workspaces/BreakFree/Feather/output"
+WORK_DIR="$(mktemp -d)"
+ZIP_PATH="$WORK_DIR/certificates.zip"
+CERT_DIR="$WORK_DIR/certificates"
 P12_PASSWORD="WSF"
 
-# ============================
-# Temporary workspace
-# ============================
+# Create output folder if it doesn't exist
+mkdir -p "$OUT_DIR"
 
-WORK_DIR="$(mktemp -d)"
-KEYCHAIN="$WORK_DIR/temp-signing.keychain-db"
-KC_PASSWORD="temp123"
+echo "🔽 Downloading certificates.zip..."
+curl -L -o "$ZIP_PATH" "$ZIP_URL"
 
-echo "Working directory: $WORK_DIR"
+echo "📦 Extracting certificates..."
+unzip -q "$ZIP_PATH" -d "$WORK_DIR"
 
-# ============================
-# Create + unlock temp keychain
-# ============================
-
-security create-keychain -p "$KC_PASSWORD" "$KEYCHAIN"
-security set-keychain-settings -lut 7200 "$KEYCHAIN"
-security unlock-keychain -p "$KC_PASSWORD" "$KEYCHAIN"
-security list-keychain -d user -s "$KEYCHAIN"
-
-# ============================
-# Import certificate
-# ============================
-
-security import "$P12_FILE" \
-    -k "$KEYCHAIN" \
-    -P "$P12_PASSWORD" \
-    -A \
-    -T /usr/bin/codesign \
-    -T /usr/bin/security
-
-# ============================
-# Extract IPA
-# ============================
-
-mkdir -p "$WORK_DIR/ipa"
-unzip -q "$BASE_IPA" -d "$WORK_DIR/ipa"
-
-APP_PATH="$(find "$WORK_DIR/ipa/Payload" -maxdepth 1 -name "*.app" | head -n 1)"
-
-if [[ -z "$APP_PATH" ]]; then
-    echo "Error: No .app bundle found."
-    exit 1
+# Locate the real certificates folder (nested under /certificates)
+if [[ -d "$WORK_DIR/certificates/certificates" ]]; then
+    CERT_DIR="$WORK_DIR/certificates/certificates"
 fi
 
-# ============================
-# Embed provisioning profile
-# ============================
+echo "📥 Downloading unsigned IPA..."
+IPA_PATH="$WORK_DIR/featherunsigned.ipa"
+curl -L -o "$IPA_PATH" "$IPA_URL"
 
-cp "$PROFILE" "$APP_PATH/embedded.mobileprovision"
+echo "✅ Starting signing loop..."
 
-# ============================
-# Extract entitlements (if any)
-# ============================
+for folder in "$CERT_DIR"/*; do
+    # Skip anything that's not a folder
+    [[ -d "$folder" ]] || continue
 
-ENTITLEMENTS="$WORK_DIR/entitlements.plist"
+    NAME=$(basename "$folder")
+    P12_FILE="$folder/$NAME.p12"
+    PROFILE_FILE="$folder/$NAME.mobileprovision"
 
-if codesign -d --entitlements :- "$APP_PATH" > "$ENTITLEMENTS" 2>/dev/null; then
-    echo "Entitlements extracted."
-else
-    rm -f "$ENTITLEMENTS"
-fi
+    if [[ ! -f "$P12_FILE" || ! -f "$PROFILE_FILE" ]]; then
+        echo "⚠️ Skipping $NAME — missing files"
+        continue
+    fi
 
-# ============================
-# Remove old signature
-# ============================
+    OUTPUT_IPA="$OUT_DIR/${NAME}-signed.ipa"
 
-rm -rf "$APP_PATH/_CodeSignature"
+    echo "--------------------------------------"
+    echo "🔐 Signing with certificate: $NAME"
+    echo "--------------------------------------"
 
-# ============================
-# Get signing identity
-# ============================
+    # Temporary keychain for each certificate
+    KEYCHAIN="$WORK_DIR/${NAME}_temp.keychain-db"
+    KC_PASS="temp123"
 
-IDENTITY=$(security find-identity -p codesigning -v "$KEYCHAIN" | head -n 1 | awk -F'"' '{print $2}')
+    # Create and use the temporary keychain
+    security create-keychain -p "$KC_PASS" "$KEYCHAIN"
+    security set-keychain-settings -lut 7200 "$KEYCHAIN"
+    security unlock-keychain -p "$KC_PASS" "$KEYCHAIN"
+    security list-keychain -d user -s "$KEYCHAIN"
 
-if [[ -z "$IDENTITY" ]]; then
-    echo "Error: No signing identity found."
-    exit 1
-fi
+    # Import certificate
+    security import "$P12_FILE" -k "$KEYCHAIN" -P "$P12_PASSWORD" -A \
+        -T /usr/bin/codesign -T /usr/bin/security
 
-echo "Using identity: $IDENTITY"
+    # Extract and prepare IPA
+    APP_DIR="$WORK_DIR/${NAME}_ipa"
+    mkdir -p "$APP_DIR"
+    unzip -q "$IPA_PATH" -d "$APP_DIR"
 
-# ============================
-# Sign app
-# ============================
+    APP_PATH="$(find "$APP_DIR/Payload" -maxdepth 1 -name '*.app' | head -n 1)"
+    cp "$PROFILE_FILE" "$APP_PATH/embedded.mobileprovision"
 
-if [[ -f "$ENTITLEMENTS" ]]; then
-    codesign -f -s "$IDENTITY" --entitlements "$ENTITLEMENTS" --deep "$APP_PATH"
-else
+    # Remove old signature
+    rm -rf "$APP_PATH/_CodeSignature"
+
+    # Determine signing identity
+    IDENTITY=$(security find-identity -p codesigning -v "$KEYCHAIN" | head -n 1 | awk -F'"' '{print $2}')
+    if [[ -z "$IDENTITY" ]]; then
+        echo "❌ No signing identity found for $NAME"
+        security delete-keychain "$KEYCHAIN"
+        rm -rf "$APP_DIR"
+        continue
+    fi
+
+    echo "Using identity: $IDENTITY"
+
+    # Sign app
     codesign -f -s "$IDENTITY" --deep "$APP_PATH"
-fi
 
-# ============================
-# Repackage IPA
-# ============================
+    # Repackage IPA
+    pushd "$APP_DIR" >/dev/null
+    zip -qry "$OUTPUT_IPA" Payload
+    popd >/dev/null
 
-pushd "$WORK_DIR/ipa" >/dev/null
-zip -qry "$WORK_DIR/signed.ipa" Payload
-popd >/dev/null
+    echo "✅ Signed IPA saved to: $OUTPUT_IPA"
 
-mkdir -p "$(dirname "$OUTPUT_IPA")"
-mv "$WORK_DIR/signed.ipa" "$OUTPUT_IPA"
+    # Clean up temp keychain and folder
+    security delete-keychain "$KEYCHAIN" || true
+    rm -rf "$APP_DIR"
+done
 
-# ============================
-# Cleanup
-# ============================
+echo "🎉 All signing operations complete!"
+echo "Signed IPAs are in: $OUT_DIR"
 
-security delete-keychain "$KEYCHAIN" || true
+# Clean up global temp
 rm -rf "$WORK_DIR"
-
-echo "Signed IPA written to: $OUTPUT_IPA"
