@@ -17,6 +17,7 @@ BLOCKS_FILE="$(mktemp)"
 for plist in $(ls "$PLIST_FOLDER"/*.plist 2>/dev/null | sort); do
   filename="$(basename "$plist")"
   name="${filename%.plist}"
+  name="${name#feather-}"
 
   cat >> "$BLOCKS_FILE" <<EOF
 <div class="plist-item">
