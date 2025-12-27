@@ -10,6 +10,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # required for pushing
 
       - name: Make scripts executable
         run: |
@@ -28,3 +30,14 @@ jobs:
 
       - name: Generate index.html
         run: ./generate_index.sh
+
+      - name: Commit and push generated files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add Feather/output/*.ipa Feather/output/*.plist index.html
+
+          git commit -m "sync_feather: update signed IPAs, plists, and index" || echo "Nothing to commit"
+
+          git push
