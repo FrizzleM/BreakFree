@@ -20,6 +20,9 @@ jobs:
       - name: Sign IPA with all certificates
         run: ./sign_with_all_certs.sh
 
+      - name: Ensure signed IPAs exist
+        run: ls -1 Feather/output/*.ipa >/dev/null
+
       - name: Generate OTA plist files
         run: ./generate_plist.sh
 
