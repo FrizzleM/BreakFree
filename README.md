@@ -1,5 +1,5 @@
+# BreakFree
 
-<h1 align="center">BreakFree</h1>
 <p align="center">
   <img width="270" height="480" alt="Screenshot 1" src="https://github.com/user-attachments/assets/cd7be6d6-cfed-40a7-a5b1-ce96d5b3a4b4">
   <img width="270" height="480" alt="Screenshot 2" src="https://github.com/user-attachments/assets/009b7364-e802-4380-899c-fdaf5545db64">
