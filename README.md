@@ -13,7 +13,7 @@
   <img src="https://img.shields.io/github/downloads/FrizzleM/BreakFree/total?style=for-the-badge&color=5dade2" alt="Downloads">
 </p>
 
-<p align="center">
+<p align="left">
   A free iOS shortcut that lets you sideload unlimited apps on your iOS and iPadOS device using a DNS and public certificates (provided by WSF).  
   It works by applying an Apple-blocking DNS and using Enterprise Certificates to install applications.
 </p>
