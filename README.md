@@ -1,8 +1,20 @@
 # BreakFree
 <img width="270" height="480" alt="450_1x_shots_so" src="https://github.com/user-attachments/assets/cd7be6d6-cfed-40a7-a5b1-ce96d5b3a4b4" /> <img width="270" height="480" alt="143_1x_shots_so" src="https://github.com/user-attachments/assets/009b7364-e802-4380-899c-fdaf5545db64" />
 
-A free iOS shortcut that lets you sideload unlimited apps on your iOS and iPadOS device using a DNS and public certificates (given by WSF).
-It works by applying an Apple-blocking DNS and using Enterprise Certificates to install applications.
+<p align="center">
+  <a href="https://github.com/FrizzleM/BreakFree/releases/latest">
+    <img src="https://img.shields.io/github/v/release/FrizzleM/BreakFree?style=for-the-badge&color=6cb6ff" alt="Latest Release">
+  </a>
+  <img src="https://img.shields.io/github/stars/FrizzleM/BreakFree?style=for-the-badge&color=5dade2" alt="Stars">
+  <img src="https://img.shields.io/github/last-commit/FrizzleM/BreakFree?style=for-the-badge&color=6cb6ff" alt="Last Commit">
+  <img src="https://img.shields.io/github/downloads/FrizzleM/BreakFree/total?style=for-the-badge&color=5dade2" alt="Downloads">
+  <img src="https://komarev.com/ghpvc/?username=FrizzleM&repo=BreakFree&style=for-the-badge&label=VIEWS&color=6cb6ff" alt="Views">
+</p>
+
+<p align="center">
+  A free iOS shortcut that lets you sideload unlimited apps on your iOS and iPadOS device using a DNS and public certificates (provided by WSF).  
+  It works by applying an Apple-blocking DNS and using Enterprise Certificates to install applications.
+</p>
 
 ## How does it work?
 This shortcut takes different developer certificates leaked from different companies, and uses them on your device. This makes it look like you're part of that company, testing their apps, when you're actually using it for your needs. Apple patched this in 2016 with iOS 10, but users recently realized you can get over the patch by using DNSs, which blocks Apple from spying on you. This is exactly what this shortcut does.
