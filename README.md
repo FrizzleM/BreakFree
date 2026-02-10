@@ -1,12 +1,15 @@
-# BreakFree
-<img width="270" height="480" alt="450_1x_shots_so" src="https://github.com/user-attachments/assets/cd7be6d6-cfed-40a7-a5b1-ce96d5b3a4b4" /> <img width="270" height="480" alt="143_1x_shots_so" src="https://github.com/user-attachments/assets/009b7364-e802-4380-899c-fdaf5545db64" />
+
+<h1 align="center">BreakFree</h1>
+<p align="center">
+  <img width="270" height="480" alt="Screenshot 1" src="https://github.com/user-attachments/assets/cd7be6d6-cfed-40a7-a5b1-ce96d5b3a4b4">
+  <img width="270" height="480" alt="Screenshot 2" src="https://github.com/user-attachments/assets/009b7364-e802-4380-899c-fdaf5545db64">
+</p>
 
 <p align="center">
   <a href="https://github.com/FrizzleM/BreakFree/releases/latest">
     <img src="https://img.shields.io/github/v/release/FrizzleM/BreakFree?style=for-the-badge&color=6cb6ff" alt="Latest Release">
   </a>
   <img src="https://img.shields.io/github/stars/FrizzleM/BreakFree?style=for-the-badge&color=5dade2" alt="Stars">
-  <img src="https://img.shields.io/github/last-commit/FrizzleM/BreakFree?style=for-the-badge&color=6cb6ff" alt="Last Commit">
   <img src="https://img.shields.io/github/downloads/FrizzleM/BreakFree/total?style=for-the-badge&color=5dade2" alt="Downloads">
   <img src="https://komarev.com/ghpvc/?username=FrizzleM&repo=BreakFree&style=for-the-badge&label=VIEWS&color=6cb6ff" alt="Views">
 </p>
