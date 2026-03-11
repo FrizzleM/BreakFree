@@ -4,8 +4,13 @@ set -euo pipefail
 ROOT_DIR="${GITHUB_WORKSPACE:-$(pwd)}"
 OUTPUT_DIR="$ROOT_DIR/Feather/output"
 
-GITHUB_USER="${GITHUB_USER:-FrizzleM}"
-GITHUB_REPO="${GITHUB_REPO:-BreakFree}"
+if [[ -n "${GITHUB_REPOSITORY:-}" && "$GITHUB_REPOSITORY" == */* ]]; then
+  GITHUB_USER="${GITHUB_USER:-${GITHUB_REPOSITORY%/*}}"
+  GITHUB_REPO="${GITHUB_REPO:-${GITHUB_REPOSITORY#*/}}"
+else
+  GITHUB_USER="${GITHUB_USER:-FrizzleM}"
+  GITHUB_REPO="${GITHUB_REPO:-BreakFree}"
+fi
 
 generate_one() {
   local IPA_PATH="$1"
@@ -27,7 +32,8 @@ generate_one() {
   fi
 
   local APP_PATH
-  APP_PATH="$(find "$TMPDIR/Payload" -maxdepth 1 -name "*.app" | head -n 1)"
+  APP_PATH="$(find "$TMPDIR/Payload" -maxdepth 1 -name "*.app" | LC_ALL=C sort)"
+  APP_PATH="${APP_PATH%%$'\n'*}"
 
   if [[ -z "${APP_PATH:-}" ]]; then
     rm -rf "$TMPDIR"
@@ -95,7 +101,15 @@ if [[ $# -ge 2 ]]; then
 fi
 
 shopt -s nullglob
-IPA_FILES=("$OUTPUT_DIR"/*.ipa)
+OLD_PLISTS=("$OUTPUT_DIR"/*.plist)
+shopt -u nullglob
+
+if [[ ${#OLD_PLISTS[@]} -gt 0 ]]; then
+  rm -f "${OLD_PLISTS[@]}"
+fi
+
+shopt -s nullglob
+IPA_FILES=("$OUTPUT_DIR"/feather-*.ipa)
 shopt -u nullglob
 
 if [[ ${#IPA_FILES[@]} -eq 0 ]]; then
