@@ -1,0 +1,23 @@
+name: generate_index_html
+
+on:
+  workflow_dispatch:
+
+jobs:
+  generate-index:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Generate index.html if missing
+        shell: bash
+        run: |
+          if [[ -f index.html ]]; then
+            echo "index.html"
+            exit 0
+          fi
+
+          chmod +x generate_index.sh
+          ./generate_index.sh
