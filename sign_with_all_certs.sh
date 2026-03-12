@@ -6,8 +6,8 @@ OUTPUT_DIR="$ROOT_DIR/Feather/output"
 CERT_URL_FILE="$ROOT_DIR/Ksign-and-esign/certs/url"
 LOCAL_UNSIGNED_IPA="$ROOT_DIR/Feather/featherunsigned.ipa"
 
-DEFAULT_CERT_ZIP_URL="https://raw.githubusercontent.com/WhySooooFurious/Ultimate-Sideloading-Guide/refs/heads/main/raw-files/certificates.zip"
-DEFAULT_UNSIGNED_IPA_URL="https://raw.githubusercontent.com/FrizzleM/BreakFree/main/Feather/featherunsigned.ipa"
+DEFAULT_CERT_ZIP_URL="https://github.com/WSF-Team/WSF/raw/refs/heads/main/portal/resources/certificates.zip"
+DEFAULT_UNSIGNED_IPA_URL="https://github.com/claration/Feather/releases/download/v1.4.1/feather_v1.4.1.ipa"
 
 DEFAULT_P12_PASSWORD="${P12_PASSWORD:-WSF}"
 KC_PASSWORD="${KC_PASSWORD:-temp123}"
