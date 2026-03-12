@@ -19,6 +19,7 @@ TEMPLATE="$ROOT_DIR/template.html"
 OUTPUT="$ROOT_DIR/index.html"
 
 BLOCKS_FILE="$(mktemp)"
+LAST_UPDATED="$(TZ=America/New_York date '+%d/%m/%Y, %H:%M EST')"
 
 shopt -s nullglob
 PLISTS=("$PLIST_FOLDER"/feather-*.plist)
@@ -42,12 +43,13 @@ EOF
   done < <(printf '%s\n' "${PLISTS[@]}" | LC_ALL=C sort)
 fi
 
-awk -v f="$BLOCKS_FILE" '
+awk -v f="$BLOCKS_FILE" -v last_updated="$LAST_UPDATED" '
   {
     if ($0 ~ /{{PLIST_BLOCKS}}/) {
       while ((getline line < f) > 0) print line
       close(f)
     } else {
+      gsub(/{{LAST_UPDATED}}/, last_updated)
       print
     }
   }
