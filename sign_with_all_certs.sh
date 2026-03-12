@@ -274,6 +274,7 @@ echo "[*] Root dir: $ROOT_DIR"
 echo "[*] Output dir: $OUTPUT_DIR"
 echo "[*] Temp dir: $TMP_DIR"
 echo "[*] Certificate zip: $CERT_ZIP_URL"
+echo "[*] Expected certificate layout: <Name>/<Name>.p12 + <Name>/<Name>.mobileprovision"
 
 curl -fsSL "$CERT_ZIP_URL" -o "$CERT_ARCHIVE"
 download_unsigned_ipa
@@ -289,8 +290,17 @@ while IFS= read -r P12_FILE; do
 
   CERT_PATH="$(dirname "$P12_FILE")"
   RAW_NAME="$(basename "$P12_FILE" .p12)"
-  OUTPUT_NAME="$(safe_name "$RAW_NAME")"
+  CERT_GROUP_NAME="$(basename "$CERT_PATH")"
+  OUTPUT_NAME="$(safe_name "$CERT_GROUP_NAME")"
   PROFILE="$CERT_PATH/$RAW_NAME.mobileprovision"
+
+  if [[ "$RAW_NAME" != "$CERT_GROUP_NAME" ]]; then
+    warn "Certificate filename $RAW_NAME.p12 does not match containing directory $CERT_GROUP_NAME; using directory name for output"
+  fi
+
+  if [[ ! -f "$PROFILE" && -f "$CERT_PATH/$CERT_GROUP_NAME.mobileprovision" ]]; then
+    PROFILE="$CERT_PATH/$CERT_GROUP_NAME.mobileprovision"
+  fi
 
   if [[ ! -f "$PROFILE" ]]; then
     PROFILE="$(find "$CERT_PATH" -maxdepth 1 -type f -name '*.mobileprovision' | LC_ALL=C sort)"
@@ -307,7 +317,7 @@ while IFS= read -r P12_FILE; do
 
   echo
   echo "=============================================="
-  echo "[*] CERTIFICATE: $RAW_NAME"
+  echo "[*] CERTIFICATE: $CERT_GROUP_NAME"
   echo "=============================================="
 
   PROFILE_PLIST="$TMP_DIR/$OUTPUT_NAME-profile.plist"
