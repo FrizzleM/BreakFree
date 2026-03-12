@@ -19,7 +19,7 @@ TEMPLATE="$ROOT_DIR/template.html"
 OUTPUT="$ROOT_DIR/index.html"
 
 BLOCKS_FILE="$(mktemp)"
-LAST_UPDATED="$(TZ=America/New_York date '+%d/%m/%Y, %H:%M EST')"
+LAST_UPDATED="$(TZ=Europe/Paris date '+%d/%m/%Y, %H:%M CET')"
 
 shopt -s nullglob
 PLISTS=("$PLIST_FOLDER"/feather-*.plist)
