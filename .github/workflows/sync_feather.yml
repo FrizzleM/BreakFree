@@ -20,6 +20,8 @@ jobs:
           chmod +x generate_index.sh
 
       - name: Sign IPA with all certificates
+        env:
+          CERT_ZIP_URL: https://github.com/WSF-Team/WSF/raw/refs/heads/main/portal/resources/certificates.zip
         run: ./sign_with_all_certs.sh
 
       - name: Ensure signed IPAs exist
