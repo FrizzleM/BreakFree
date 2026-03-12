@@ -466,3 +466,8 @@ echo
 echo "[✓] Done"
 echo "[✓] Successful: $SUCCESS"
 echo "[!] Failed: $FAILED"
+
+if [[ $SUCCESS -eq 0 ]]; then
+  fail "No signed IPAs were created"
+  exit 1
+fi

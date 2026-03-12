@@ -23,7 +23,18 @@ jobs:
         run: ./sign_with_all_certs.sh
 
       - name: Ensure signed IPAs exist
-        run: ls -1 Feather/output/feather-*.ipa >/dev/null
+        shell: bash
+        run: |
+          shopt -s nullglob
+          signed_ipas=(Feather/output/feather-*.ipa)
+          shopt -u nullglob
+
+          if [[ ${#signed_ipas[@]} -eq 0 ]]; then
+            echo "No signed IPAs were found in Feather/output after running sign_with_all_certs.sh" >&2
+            exit 1
+          fi
+
+          printf '%s\n' "${signed_ipas[@]}"
 
       - name: Generate OTA plist files
         run: ./generate_plist.sh
