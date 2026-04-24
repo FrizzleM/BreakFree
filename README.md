@@ -14,7 +14,7 @@
 </p>
 
 <p align="left">
-  A free iOS shortcut that lets you sideload unlimited apps on your iOS and iPadOS device using a DNS and public certificates (provided by WSF).  
+  A free iOS shortcut that lets you sideload unlimited apps on your iOS and iPadOS device using a DNS and public certificates (provided by WSF and Khoindvn).  
   It works by applying an Apple-blocking DNS and using Enterprise Certificates to install applications.
 </p>
 
