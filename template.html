@@ -1,3 +1,6 @@
+Here is the same animated **Get the Shortcut** button added to your template version:
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,6 +42,59 @@
             margin-bottom: 25px;
         }
 
+        .shortcut-button-container {
+            text-align: center;
+            margin: 25px 0 35px;
+        }
+
+        .shortcut-button {
+            display: inline-block;
+            padding: 15px 28px;
+            border-radius: 999px;
+            background: linear-gradient(120deg, #007aff, #7c3aed, #ff2d55, #ff9500);
+            background-size: 300% 300%;
+            color: #ffffff !important;
+            font-size: 17px;
+            font-weight: 800;
+            letter-spacing: 0.3px;
+            text-decoration: none;
+            box-shadow: 0 0 25px rgba(124, 58, 237, 0.55);
+            animation: gradientMove 4s ease infinite, softPulse 2.2s ease-in-out infinite;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .shortcut-button:hover {
+            transform: translateY(-3px) scale(1.04);
+            box-shadow: 0 0 35px rgba(255, 45, 85, 0.7);
+            background: linear-gradient(120deg, #007aff, #7c3aed, #ff2d55, #ff9500);
+            background-size: 300% 300%;
+        }
+
+        .shortcut-button:active {
+            transform: scale(0.97);
+        }
+
+        @keyframes gradientMove {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @keyframes softPulse {
+            0%, 100% {
+                box-shadow: 0 0 22px rgba(0, 122, 255, 0.45);
+            }
+            50% {
+                box-shadow: 0 0 34px rgba(255, 45, 85, 0.75);
+            }
+        }
+
         .plist-item {
             background: #1a1a1a;
             padding: 16px 20px;
@@ -59,7 +115,7 @@
             color: #fff;
         }
 
-        a {
+        .plist-item a {
             display: inline-block;
             margin-top: 8px;
             padding: 8px 14px;
@@ -71,7 +127,7 @@
             transition: background 0.15s ease;
         }
 
-        a:hover {
+        .plist-item a:hover {
             background: #005bbf;
         }
 
@@ -93,6 +149,12 @@
 <h1>BreakFree Feather Installers</h1>
 <p>Use any of the below installers to install Feather</p>
 
+<div class="shortcut-button-container">
+    <a class="shortcut-button" href="https://github.com/FrizzleM/BreakFree/releases/latest" target="_blank" rel="noopener noreferrer">
+        Get the Shortcut
+    </a>
+</div>
+
 {{PLIST_BLOCKS}}
 
 <div class="footer">
@@ -103,3 +165,4 @@
 
 </body>
 </html>
+```
