@@ -32,7 +32,7 @@ It is also available in my [RoutineHub](https://routinehub.co/shortcut/21677/)
 ## iOS 26.X.X just released, is it still compatible?
 This method uses the Apple Developer Program and DNSs, two key features that Apple has no plans of removing. Therefore, this method should work on any version, no matter how new it is. Still, the latest tested version where it works is currently iOS 26.5.
 
-Please do note: Since and including iOS 18.4.1, Apple became way more aggressive with revokes, as well as making certain domains impossible to blacklist as doing so stops the Apps' installation. Although BreakFree has taken the necessary measures with v2, it still has become much easie to blacklisted. If you are on the latest iOS, have any PC, and wish to install unlimited apps, I recommend you to instead use Livecontainer + Sidestore with [iLoader](https://github.com/nab138/iloader).
+Please do note: Since and including iOS 18.4.1, Apple became way more aggressive with revokes, as well as making certain domains impossible to blacklist as doing so stops the Apps' installation. Although BreakFree has taken the necessary measures with v2, it still has become much easier to blacklisted. If you are on the latest iOS, have any PC, and wish to install unlimited apps, I recommend you to instead use Livecontainer + Sidestore with [iLoader](https://github.com/nab138/iloader).
 
 ## License
 This project is licensed under a custom **Educational Use License**.  
