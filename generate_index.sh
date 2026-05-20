@@ -67,22 +67,30 @@ certificate_validity_block() {
   printf '<div class="cert-validity"><span class="%s">%s</span></div>\n' "$class_name" "$label"
 }
 
+certificate_days_left() {
+  local name="$1"
+  local cert_name=""
+  local cert_expires_at=""
+  local cert_days_left=""
+
+  if [[ ! -f "$CERT_METADATA_FILE" ]]; then
+    printf '%s\n' "-999999"
+    return 0
+  fi
+
+  while IFS=$'\t' read -r cert_name cert_expires_at cert_days_left; do
+    if [[ "$cert_name" == "$name" && "$cert_days_left" =~ ^-?[0-9]+$ ]]; then
+      printf '%s\n' "$cert_days_left"
+      return 0
+    fi
+  done < "$CERT_METADATA_FILE"
+
+  printf '%s\n' "-999999"
+}
+
 shopt -s nullglob
 PLISTS=("$PLIST_FOLDER"/feather-*.plist)
 shopt -u nullglob
-
-declare -A CERT_DAYS_LEFT_MAP=()
-if [[ -f "$CERT_METADATA_FILE" ]]; then
-  while IFS=$'\t' read -r cert_name cert_expires_at cert_days_left; do
-    if [[ "$cert_name" == "name" ]]; then
-      continue
-    fi
-
-    if [[ "$cert_days_left" =~ ^-?[0-9]+$ ]]; then
-      CERT_DAYS_LEFT_MAP["$cert_name"]="$cert_days_left"
-    fi
-  done < "$CERT_METADATA_FILE"
-fi
 
 if [[ ${#PLISTS[@]} -gt 0 ]]; then
   while IFS=$'\t' read -r _sort_days_left _sort_name plist; do
@@ -108,7 +116,7 @@ EOF
       filename="$(basename "$plist")"
       name="${filename%.plist}"
       name="${name#feather-}"
-      days_left="${CERT_DAYS_LEFT_MAP[$name]:--999999}"
+      days_left="$(certificate_days_left "$name")"
       printf '%s\t%s\t%s\n' "$days_left" "$name" "$plist"
     done | LC_ALL=C sort -t $'\t' -k1,1nr -k2,2
   )
