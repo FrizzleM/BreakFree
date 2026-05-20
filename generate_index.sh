@@ -31,7 +31,7 @@ certificate_validity_block() {
   local expires_at=""
   local days_left=""
   local label=""
-  local class_name="cert-validity"
+  local class_name="cert-days-left"
 
   if [[ ! -f "$CERT_METADATA_FILE" ]]; then
     return 0
@@ -59,11 +59,14 @@ certificate_validity_block() {
     class_name="$class_name expired"
   elif (( days_left == 1 )); then
     label="1 day left"
+  elif (( days_left >= 100 )); then
+    label="$days_left days left"
+    class_name="$class_name good"
   else
     label="$days_left days left"
   fi
 
-  printf '<div class="%s">Certificate validity: %s (expires %s)</div>\n' "$class_name" "$label" "$expires_at"
+  printf '<div class="cert-validity">Expires %s · <span class="%s">%s</span></div>\n' "$expires_at" "$class_name" "$label"
 }
 
 shopt -s nullglob
