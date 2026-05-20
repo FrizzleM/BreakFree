@@ -71,8 +71,21 @@ shopt -s nullglob
 PLISTS=("$PLIST_FOLDER"/feather-*.plist)
 shopt -u nullglob
 
+declare -A CERT_DAYS_LEFT_MAP=()
+if [[ -f "$CERT_METADATA_FILE" ]]; then
+  while IFS=$'\t' read -r cert_name cert_expires_at cert_days_left; do
+    if [[ "$cert_name" == "name" ]]; then
+      continue
+    fi
+
+    if [[ "$cert_days_left" =~ ^-?[0-9]+$ ]]; then
+      CERT_DAYS_LEFT_MAP["$cert_name"]="$cert_days_left"
+    fi
+  done < "$CERT_METADATA_FILE"
+fi
+
 if [[ ${#PLISTS[@]} -gt 0 ]]; then
-  while IFS= read -r plist; do
+  while IFS=$'\t' read -r _sort_days_left _sort_name plist; do
     filename="$(basename "$plist")"
     name="${filename%.plist}"
     name="${name#feather-}"
@@ -90,7 +103,15 @@ Install $name
 </div>
 
 EOF
-  done < <(printf '%s\n' "${PLISTS[@]}" | LC_ALL=C sort)
+  done < <(
+    for plist in "${PLISTS[@]}"; do
+      filename="$(basename "$plist")"
+      name="${filename%.plist}"
+      name="${name#feather-}"
+      days_left="${CERT_DAYS_LEFT_MAP[$name]:--999999}"
+      printf '%s\t%s\t%s\n' "$days_left" "$name" "$plist"
+    done | LC_ALL=C sort -t $'\t' -k1,1nr -k2,2
+  )
 fi
 
 awk -v f="$BLOCKS_FILE" -v last_updated="$LAST_UPDATED" '
