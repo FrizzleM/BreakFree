@@ -5,6 +5,7 @@ ROOT_DIR="${GITHUB_WORKSPACE:-$(pwd)}"
 OUTPUT_DIR="$ROOT_DIR/Feather/output"
 CERT_URL_FILE="$ROOT_DIR/Ksign-and-esign/certs/url"
 LOCAL_UNSIGNED_IPA="$ROOT_DIR/Feather/featherunsigned.ipa"
+CERT_METADATA_FILE="$OUTPUT_DIR/certificate-validity.tsv"
 
 DEFAULT_CERT_ZIP_URL="https://github.com/WSF-Team/WSF/raw/refs/heads/main/portal/resources/certificates.zip"
 DEFAULT_UNSIGNED_IPA_URL="https://github.com/claration/Feather/releases/download/v1.4.1/feather_v1.4.1.ipa"
@@ -55,6 +56,34 @@ trimmed_first_line() {
       }
     }
   ' "$1"
+}
+
+password_from_file() {
+  awk '
+    {
+      sub(/\r$/, "")
+      if ($0 ~ /password[[:space:]]*[:：]/) {
+        sub(/^.*password[[:space:]]*[:：][[:space:]]*/, "")
+        found = 1
+        print
+        exit
+      }
+      if ($0 ~ /密码[[:space:]]*[:：]/) {
+        sub(/^.*密码[[:space:]]*[:：][[:space:]]*/, "")
+        found = 1
+        print
+        exit
+      }
+      if ($0 ~ /[^[:space:]]/ && first == "") {
+        first = $0
+      }
+    }
+    END {
+      if (!found && first != "") {
+        print first
+      }
+    }
+  ' "$1" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//'
 }
 
 safe_name() {
@@ -116,10 +145,13 @@ resolve_p12_password() {
     "$cert_dir/$base_name.pass" \
     "$cert_dir/$base_name.txt" \
     "$cert_dir/password.txt" \
-    "$cert_dir/password"; do
+    "$cert_dir/password" \
+    "$cert_dir/readme.txt" \
+    "$cert_dir/README.txt" \
+    "$cert_dir/readme"; do
     if [[ -f "$candidate" ]]; then
       local sidecar_password
-      sidecar_password="$(trimmed_first_line "$candidate")"
+      sidecar_password="$(password_from_file "$candidate")"
       if [[ -n "$sidecar_password" ]]; then
         echo "$sidecar_password"
         return 0
@@ -242,6 +274,63 @@ import_certificate() {
   security import "$repacked_p12" -f pkcs12 -k "$keychain" -P "$password" -A -T /usr/bin/codesign -T /usr/bin/security >/dev/null 2>&1
 }
 
+certificate_expiry_info() {
+  local p12_file="$1"
+  local password="$2"
+  local cert_pem="$TMP_DIR/cert-$(basename "$p12_file" .p12).pem"
+  local not_after=""
+
+  if ! openssl pkcs12 $OPENSSL_LEGACY_FLAG -in "$p12_file" -passin "pass:$password" -nokeys -clcerts -out "$cert_pem" >/dev/null 2>&1; then
+    return 1
+  fi
+
+  not_after="$(openssl x509 -in "$cert_pem" -noout -enddate 2>/dev/null | sed 's/^notAfter=//')"
+  if [[ -z "$not_after" ]]; then
+    return 1
+  fi
+
+  if ! command -v python3 >/dev/null 2>&1; then
+    return 1
+  fi
+
+  python3 - "$not_after" <<'PY'
+import math
+import sys
+from datetime import datetime, timezone
+
+raw = sys.argv[1].strip()
+formats = (
+    "%b %d %H:%M:%S %Y %Z",
+    "%Y-%m-%d %H:%M:%S %Z",
+    "%Y-%m-%dT%H:%M:%SZ",
+)
+
+expiry = None
+for fmt in formats:
+    try:
+        expiry = datetime.strptime(raw, fmt)
+        break
+    except ValueError:
+        pass
+
+if expiry is None:
+    raise SystemExit(1)
+
+if expiry.tzinfo is None:
+    expiry = expiry.replace(tzinfo=timezone.utc)
+else:
+    expiry = expiry.astimezone(timezone.utc)
+
+seconds_left = (expiry - datetime.now(timezone.utc)).total_seconds()
+if seconds_left >= 0:
+    days_left = math.ceil(seconds_left / 86400)
+else:
+    days_left = math.floor(seconds_left / 86400)
+
+print(f"{expiry.date().isoformat()}\t{days_left}")
+PY
+}
+
 sign_embedded_code() {
   local app_path="$1"
   local identity="$2"
@@ -267,6 +356,7 @@ fi
 
 mkdir -p "$OUTPUT_DIR"
 clean_generated_artifacts "feather-*.ipa"
+printf 'name\tcertificate_expires_at\tdays_left\n' > "$CERT_METADATA_FILE"
 
 CERT_ZIP_URL="$(resolve_cert_zip_url)"
 
@@ -314,6 +404,14 @@ while IFS= read -r P12_FILE; do
   fi
 
   P12_PASSWORD_FOR_CERT="$(resolve_p12_password "$CERT_PATH" "$RAW_NAME")"
+  CERT_EXPIRES_AT="unknown"
+  CERT_DAYS_LEFT="unknown"
+
+  if CERT_EXPIRY_INFO="$(certificate_expiry_info "$P12_FILE" "$P12_PASSWORD_FOR_CERT")"; then
+    IFS=$'\t' read -r CERT_EXPIRES_AT CERT_DAYS_LEFT <<< "$CERT_EXPIRY_INFO"
+  else
+    warn "Unable to read certificate expiry for $CERT_GROUP_NAME"
+  fi
 
   echo
   echo "=============================================="
@@ -336,6 +434,7 @@ while IFS= read -r P12_FILE; do
   log "Team ID: ${TEAM_ID:-unknown}"
   log "Profile App ID: ${PROFILE_APP_ID:-unknown}"
   log "Profile Expiry: $EXPIRY"
+  log "Certificate Expiry: $CERT_EXPIRES_AT ($CERT_DAYS_LEFT days left)"
 
   if [[ -z "$TEAM_ID" || -z "$PROFILE_APP_ID" ]]; then
     fail "Provisioning profile is missing TeamIdentifier or application-identifier"
@@ -461,6 +560,7 @@ while IFS= read -r P12_FILE; do
   popd >/dev/null
 
   log "Signed IPA created: feather-$OUTPUT_NAME.ipa"
+  printf '%s\t%s\t%s\n' "$OUTPUT_NAME" "$CERT_EXPIRES_AT" "$CERT_DAYS_LEFT" >> "$CERT_METADATA_FILE"
 
   restore_keychains
   security delete-keychain "$KEYCHAIN" >/dev/null 2>&1 || true
