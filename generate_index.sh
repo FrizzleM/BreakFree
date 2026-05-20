@@ -28,7 +28,6 @@ certificate_validity_block() {
   local cert_name=""
   local cert_expires_at=""
   local cert_days_left=""
-  local expires_at=""
   local days_left=""
   local label=""
   local class_name="cert-days-left"
@@ -40,7 +39,6 @@ certificate_validity_block() {
   while IFS=$'\t' read -r cert_name cert_expires_at cert_days_left; do
     if [[ "$cert_name" == "$name" ]]; then
       row=1
-      expires_at="$cert_expires_at"
       days_left="$cert_days_left"
       break
     fi
@@ -50,7 +48,7 @@ certificate_validity_block() {
     return 0
   fi
 
-  if [[ -z "$expires_at" || -z "$days_left" || ! "$days_left" =~ ^-?[0-9]+$ ]]; then
+  if [[ -z "$days_left" || ! "$days_left" =~ ^-?[0-9]+$ ]]; then
     return 0
   fi
 
@@ -66,7 +64,7 @@ certificate_validity_block() {
     label="$days_left days left"
   fi
 
-  printf '<div class="cert-validity">Expires %s · <span class="%s">%s</span></div>\n' "$expires_at" "$class_name" "$label"
+  printf '<div class="cert-validity"><span class="%s">%s</span></div>\n' "$class_name" "$label"
 }
 
 shopt -s nullglob
