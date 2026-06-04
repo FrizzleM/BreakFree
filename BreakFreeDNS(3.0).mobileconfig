@@ -10,6 +10,7 @@
 Otherwise, always use STANDARD.
 DO NOT USE VPNS, you WILL get blacklisted.</string>
 	</dict>
+
 	<key>PayloadContent</key>
 	<array>
 		<dict>
@@ -20,6 +21,7 @@ DO NOT USE VPNS, you WILL get blacklisted.</string>
 				<key>ServerURL</key>
 				<string>https://4ma0yugkgu.cloudflare-gateway.com/dns-query</string>
 			</dict>
+
 			<key>OnDemandRules</key>
 			<array>
 				<dict>
@@ -27,10 +29,11 @@ DO NOT USE VPNS, you WILL get blacklisted.</string>
 					<string>Connect</string>
 				</dict>
 			</array>
+
 			<key>PayloadDisplayName</key>
 			<string>Standard - BreakFreeDNS</string>
 			<key>PayloadIdentifier</key>
-			<string>com.apple.dnsSettings.managed.D3BC02F5-9414-4EBE-B541-6ED4051DEEC9</string>
+			<string>com.frizzlem.breakfreedns.standard</string>
 			<key>PayloadOrganization</key>
 			<string>Frizzle</string>
 			<key>PayloadType</key>
@@ -42,6 +45,7 @@ DO NOT USE VPNS, you WILL get blacklisted.</string>
 			<key>ProhibitDisablement</key>
 			<false/>
 		</dict>
+
 		<dict>
 			<key>DNSSettings</key>
 			<dict>
@@ -50,10 +54,11 @@ DO NOT USE VPNS, you WILL get blacklisted.</string>
 				<key>ServerURL</key>
 				<string>https://vyvzdkmx6w.cloudflare-gateway.com/dns-query</string>
 			</dict>
+
 			<key>PayloadDisplayName</key>
 			<string>Install - BreakFreeDNS</string>
 			<key>PayloadIdentifier</key>
-			<string>com.apple.dnsSettings.managed.6D1F03D2-A784-4A65-882F-0914277129ED</string>
+			<string>com.frizzlem.breakfreedns.install</string>
 			<key>PayloadOrganization</key>
 			<string>Frizzle</string>
 			<key>PayloadType</key>
@@ -66,12 +71,13 @@ DO NOT USE VPNS, you WILL get blacklisted.</string>
 			<false/>
 		</dict>
 	</array>
+
 	<key>PayloadDescription</key>
 	<string>BreakFree's official DNS (v3)</string>
 	<key>PayloadDisplayName</key>
 	<string>BreakFreeDNS</string>
 	<key>PayloadIdentifier</key>
-	<string>FrizzleM.BreakFreeDNS.3-0</string>
+	<string>com.frizzlem.breakfreedns.profile</string>
 	<key>PayloadOrganization</key>
 	<string>FrizzleM</string>
 	<key>PayloadScope</key>
