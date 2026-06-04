@@ -25,39 +25,20 @@ DO NOT USE VPNS, you WILL get blacklisted.</string>
 			<array>
 				<dict>
 					<key>Action</key>
-					<string>EvaluateConnection</string>
-					<key>ActionParameters</key>
-					<array>
-						<dict>
-							<key>DomainAction</key>
-							<string>NeverConnect</string>
-							<key>Domains</key>
-							<array>
-								<string>dav.orange.fr</string>
-								<string>vvm.mobistar.be</string>
-								<string>msg.t-mobile.com</string>
-								<string>tma.vvm.mone.pan-net.eu</string>
-								<string>vvm.ee.co.uk</string>
-							</array>
-						</dict>
-					</array>
-				</dict>
-				<dict>
-					<key>Action</key>
 					<string>Connect</string>
 				</dict>
 			</array>
 
 			<key>PayloadDisplayName</key>
-			<string>Installation - BreakFreeDNS</string>
+			<string>Installation</string>
 			<key>PayloadIdentifier</key>
-			<string>com.apple.dnsSettings.managed.6D1F03D2-A784-4A65-882F-0914277129ED</string>
+			<string>com.apple.dnsSettings.managed.E9C60B43-DB1A-4091-BE5D-B41C571DC347</string>
 			<key>PayloadOrganization</key>
-			<string>Frizzle</string>
+			<string>FrizzleM</string>
 			<key>PayloadType</key>
 			<string>com.apple.dnsSettings.managed</string>
 			<key>PayloadUUID</key>
-			<string>6D1F03D2-A784-4A65-882F-0914277129ED</string>
+			<string>E9C60B43-DB1A-4091-BE5D-B41C571DC347</string>
 			<key>PayloadVersion</key>
 			<integer>1</integer>
 			<key>ProhibitDisablement</key>
@@ -73,16 +54,24 @@ DO NOT USE VPNS, you WILL get blacklisted.</string>
 				<string>https://4ma0yugkgu.cloudflare-gateway.com/dns-query</string>
 			</dict>
 
+			<key>OnDemandRules</key>
+			<array>
+				<dict>
+					<key>Action</key>
+					<string>Connect</string>
+				</dict>
+			</array>
+
 			<key>PayloadDisplayName</key>
-			<string>Standard - BreakFreeDNS</string>
+			<string>Standard</string>
 			<key>PayloadIdentifier</key>
-			<string>com.apple.dnsSettings.managed.D3BC02F5-9414-4EBE-B541-6ED4051DEEC9</string>
+			<string>com.apple.dnsSettings.managed.505281FA-5F62-42F2-B1A4-5D61AE18A0D2</string>
 			<key>PayloadOrganization</key>
-			<string>Frizzle</string>
+			<string>FrizzleM</string>
 			<key>PayloadType</key>
 			<string>com.apple.dnsSettings.managed</string>
 			<key>PayloadUUID</key>
-			<string>D3BC02F5-9414-4EBE-B541-6ED4051DEEC9</string>
+			<string>505281FA-5F62-42F2-B1A4-5D61AE18A0D2</string>
 			<key>PayloadVersion</key>
 			<integer>1</integer>
 			<key>ProhibitDisablement</key>
@@ -93,9 +82,9 @@ DO NOT USE VPNS, you WILL get blacklisted.</string>
 	<key>PayloadDescription</key>
 	<string>BreakFree's official DNS (v3)</string>
 	<key>PayloadDisplayName</key>
-	<string>BreakFreeDNS</string>
+	<string>BreakFreeDNS(3.0)</string>
 	<key>PayloadIdentifier</key>
-	<string>com.frizzlem.breakfreedns.E948A9E7-C50D-4591-B3DE-4C28629C1B2F</string>
+	<string>com.frizzlem.breakfreedns.v3</string>
 	<key>PayloadOrganization</key>
 	<string>FrizzleM</string>
 	<key>PayloadScope</key>
