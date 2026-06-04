@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>PayloadContent</key>
+    <array>
+        <dict>
+            <key>URL</key>
+            <string>https://raw.githubusercontent.com/FrizzleM/BreakFree/main/BreakFreeDNS(3.0).mobileconfig</string>
+        </dict>
+    </array>
+    <key>PayloadDescription</key>
+    <string>Installs BreakFreeDNS 3.0 mobile configuration profile.</string>
+    <key>PayloadDisplayName</key>
+    <string>Install BreakFreeDNS 3.0</string>
+    <key>PayloadIdentifier</key>
+    <string>com.frizzlem.breakfree.install.breakfreedns3</string>
+    <key>PayloadOrganization</key>
+    <string>FrizzleM</string>
+    <key>PayloadType</key>
+    <string>Configuration</string>
+    <key>PayloadUUID</key>
+    <string>0C8FA4E2-09B0-4C34-9F40-4E7BC56E4F8A</string>
+    <key>PayloadVersion</key>
+    <integer>1</integer>
+</dict>
+</plist>
