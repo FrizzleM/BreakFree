@@ -32,7 +32,7 @@ DO NOT USE VPNS, you WILL get blacklisted.</string>
 			<key>PayloadIdentifier</key>
 			<string>com.apple.dnsSettings.managed.D3BC02F5-9414-4EBE-B541-6ED4051DEEC9</string>
 			<key>PayloadOrganization</key>
-			<string>WSF Team</string>
+			<string>Frizzle</string>
 			<key>PayloadType</key>
 			<string>com.apple.dnsSettings.managed</string>
 			<key>PayloadUUID</key>
@@ -55,7 +55,7 @@ DO NOT USE VPNS, you WILL get blacklisted.</string>
 			<key>PayloadIdentifier</key>
 			<string>com.apple.dnsSettings.managed.6D1F03D2-A784-4A65-882F-0914277129ED</string>
 			<key>PayloadOrganization</key>
-			<string>WSF Team</string>
+			<string>Frizzle</string>
 			<key>PayloadType</key>
 			<string>com.apple.dnsSettings.managed</string>
 			<key>PayloadUUID</key>
