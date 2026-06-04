@@ -1,4 +1,3 @@
-```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
@@ -19,11 +18,30 @@ DO NOT USE VPNS, you WILL get blacklisted.</string>
 				<key>DNSProtocol</key>
 				<string>HTTPS</string>
 				<key>ServerURL</key>
-				<string>https://4ma0yugkgu.cloudflare-gateway.com/dns-query</string>
+				<string>https://vyvzdkmx6w.cloudflare-gateway.com/dns-query</string>
 			</dict>
 
 			<key>OnDemandRules</key>
 			<array>
+				<dict>
+					<key>Action</key>
+					<string>EvaluateConnection</string>
+					<key>ActionParameters</key>
+					<array>
+						<dict>
+							<key>DomainAction</key>
+							<string>NeverConnect</string>
+							<key>Domains</key>
+							<array>
+								<string>dav.orange.fr</string>
+								<string>vvm.mobistar.be</string>
+								<string>msg.t-mobile.com</string>
+								<string>tma.vvm.mone.pan-net.eu</string>
+								<string>vvm.ee.co.uk</string>
+							</array>
+						</dict>
+					</array>
+				</dict>
 				<dict>
 					<key>Action</key>
 					<string>Connect</string>
@@ -31,15 +49,15 @@ DO NOT USE VPNS, you WILL get blacklisted.</string>
 			</array>
 
 			<key>PayloadDisplayName</key>
-			<string>Standard - BreakFreeDNS</string>
+			<string>Installation - BreakFreeDNS</string>
 			<key>PayloadIdentifier</key>
-			<string>com.frizzlem.breakfreedns.standard</string>
+			<string>com.apple.dnsSettings.managed.6D1F03D2-A784-4A65-882F-0914277129ED</string>
 			<key>PayloadOrganization</key>
 			<string>Frizzle</string>
 			<key>PayloadType</key>
 			<string>com.apple.dnsSettings.managed</string>
 			<key>PayloadUUID</key>
-			<string>D3BC02F5-9414-4EBE-B541-6ED4051DEEC9</string>
+			<string>6D1F03D2-A784-4A65-882F-0914277129ED</string>
 			<key>PayloadVersion</key>
 			<integer>1</integer>
 			<key>ProhibitDisablement</key>
@@ -52,19 +70,19 @@ DO NOT USE VPNS, you WILL get blacklisted.</string>
 				<key>DNSProtocol</key>
 				<string>HTTPS</string>
 				<key>ServerURL</key>
-				<string>https://vyvzdkmx6w.cloudflare-gateway.com/dns-query</string>
+				<string>https://4ma0yugkgu.cloudflare-gateway.com/dns-query</string>
 			</dict>
 
 			<key>PayloadDisplayName</key>
-			<string>Install - BreakFreeDNS</string>
+			<string>Standard - BreakFreeDNS</string>
 			<key>PayloadIdentifier</key>
-			<string>com.frizzlem.breakfreedns.install</string>
+			<string>com.apple.dnsSettings.managed.D3BC02F5-9414-4EBE-B541-6ED4051DEEC9</string>
 			<key>PayloadOrganization</key>
 			<string>Frizzle</string>
 			<key>PayloadType</key>
 			<string>com.apple.dnsSettings.managed</string>
 			<key>PayloadUUID</key>
-			<string>6D1F03D2-A784-4A65-882F-0914277129ED</string>
+			<string>D3BC02F5-9414-4EBE-B541-6ED4051DEEC9</string>
 			<key>PayloadVersion</key>
 			<integer>1</integer>
 			<key>ProhibitDisablement</key>
@@ -77,7 +95,7 @@ DO NOT USE VPNS, you WILL get blacklisted.</string>
 	<key>PayloadDisplayName</key>
 	<string>BreakFreeDNS</string>
 	<key>PayloadIdentifier</key>
-	<string>com.frizzlem.breakfreedns.profile</string>
+	<string>com.frizzlem.breakfreedns.E948A9E7-C50D-4591-B3DE-4C28629C1B2F</string>
 	<key>PayloadOrganization</key>
 	<string>FrizzleM</string>
 	<key>PayloadScope</key>
@@ -92,4 +110,3 @@ DO NOT USE VPNS, you WILL get blacklisted.</string>
 	<integer>1</integer>
 </dict>
 </plist>
-```
