@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ConsentText</key>
+	<dict>
+		<key>default</key>
+		<string>Use Installation only while installing apps! 
+Otherwise, always use STANDARD.
+DO NOT USE VPNS, you WILL get blacklisted.</string>
+	</dict>
+	<key>PayloadContent</key>
+	<array>
+		<dict>
+			<key>DNSSettings</key>
+			<dict>
+				<key>DNSProtocol</key>
+				<string>HTTPS</string>
+				<key>ServerURL</key>
+				<string>https://4ma0yugkgu.cloudflare-gateway.com/dns-query</string>
+			</dict>
+			<key>OnDemandRules</key>
+			<array>
+				<dict>
+					<key>Action</key>
+					<string>Connect</string>
+				</dict>
+			</array>
+			<key>PayloadDisplayName</key>
+			<string>Standard - BreakFree DNS</string>
+			<key>PayloadIdentifier</key>
+			<string>com.apple.dnsSettings.managed.D3BC02F5-9414-4EBE-B541-6ED4051DEEC9</string>
+			<key>PayloadOrganization</key>
+			<string>WSF Team</string>
+			<key>PayloadType</key>
+			<string>com.apple.dnsSettings.managed</string>
+			<key>PayloadUUID</key>
+			<string>D3BC02F5-9414-4EBE-B541-6ED4051DEEC9</string>
+			<key>PayloadVersion</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>DNSSettings</key>
+			<dict>
+				<key>DNSProtocol</key>
+				<string>HTTPS</string>
+				<key>ServerURL</key>
+				<string>https://vyvzdkmx6w.cloudflare-gateway.com/dns-query</string>
+			</dict>
+			<key>OnDemandRules</key>
+			<array>
+				<dict>
+					<key>Action</key>
+					<string>Connect</string>
+				</dict>
+			</array>
+			<key>PayloadDisplayName</key>
+			<string>Install - BreakFreeDNS</string>
+			<key>PayloadIdentifier</key>
+			<string>com.apple.dnsSettings.managed.6D1F03D2-A784-4A65-882F-0914277129ED</string>
+			<key>PayloadOrganization</key>
+			<string>WSF Team</string>
+			<key>PayloadType</key>
+			<string>com.apple.dnsSettings.managed</string>
+			<key>PayloadUUID</key>
+			<string>6D1F03D2-A784-4A65-882F-0914277129ED</string>
+			<key>PayloadVersion</key>
+			<integer>1</integer>
+		</dict>
+	</array>
+	<key>PayloadDescription</key>
+	<string>BreakFree's official DNS (v3)</string>
+	<key>PayloadDisplayName</key>
+	<string>BreakFreeDNS</string>
+	<key>PayloadIdentifier</key>
+	<string>iMazing-Profile-Editor.E948A9E7-C50D-4591-B3DE-4C28629C1B2F</string>
+	<key>PayloadOrganization</key>
+	<string>FrizzleM</string>
+	<key>PayloadType</key>
+	<string>Configuration</string>
+	<key>PayloadUUID</key>
+	<string>E948A9E7-C50D-4591-B3DE-4C28629C1B2F</string>
+	<key>PayloadVersion</key>
+	<integer>1</integer>
+	<key>RemovalDate</key>
+	<date>2999-12-31T09:41:36Z</date>
+	<key>TargetDeviceType</key>
+	<integer>1</integer>
+</dict>
+</plist>
