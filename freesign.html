@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Freesign Breakfree</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: #0d0d0d;
+            color: #e6e6e6;
+            line-height: 1.7;
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .logo-container img {
+            width: 130px;
+            border-radius: 12px;
+            box-shadow: 0 0 15px #00000050;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: #ffffff;
+        }
+
+        p {
+            text-align: center;
+            opacity: 0.8;
+            margin-bottom: 25px;
+        }
+
+        .shortcut-button-container {
+            text-align: center;
+            margin: 25px 0 35px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .shortcut-button,
+        .donate-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 15px 28px;
+            border-radius: 999px;
+            color: #ffffff !important;
+            font-size: 17px;
+            font-weight: 800;
+            letter-spacing: 0.3px;
+            text-decoration: none;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border 0.2s ease;
+        }
+
+        .shortcut-button {
+            position: relative;
+            overflow: hidden;
+            border: 1px solid transparent;
+            background:
+                linear-gradient(120deg, #151515, #242424) padding-box,
+                linear-gradient(120deg, #007aff, #7c3aed, #ff2d55, #ff9500) border-box;
+            background-size: 300% 300%;
+            box-shadow:
+                0 0 25px rgba(124, 58, 237, 0.45),
+                inset 0 0 18px rgba(255, 255, 255, 0.04);
+            animation: gradientMove 4s ease infinite, softPulse 2.2s ease-in-out infinite;
+        }
+
+        .shortcut-button::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(120deg, transparent, rgba(124, 58, 237, 0.28), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .shortcut-button:hover::before {
+            transform: translateX(100%);
+        }
+
+        .shortcut-button:hover {
+            transform: translateY(-3px) scale(1.04);
+            box-shadow:
+                0 0 35px rgba(255, 45, 85, 0.6),
+                0 0 55px rgba(124, 58, 237, 0.25);
+        }
+
+        .shortcut-button span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .donate-button {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(120deg, #151515, #242424);
+            border: 1px solid rgba(255, 149, 0, 0.65);
+            box-shadow:
+                0 0 18px rgba(255, 149, 0, 0.25),
+                inset 0 0 18px rgba(255, 255, 255, 0.04);
+        }
+
+        .donate-button::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(120deg, transparent, rgba(255, 149, 0, 0.28), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .donate-button:hover::before {
+            transform: translateX(100%);
+        }
+
+        .donate-button:hover {
+            transform: translateY(-3px) scale(1.04);
+            border-color: rgba(255, 204, 91, 0.95);
+            box-shadow:
+                0 0 30px rgba(255, 149, 0, 0.45),
+                0 0 50px rgba(255, 45, 85, 0.18);
+        }
+
+        .donate-button span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .shortcut-button:active,
+        .donate-button:active {
+            transform: scale(0.97);
+        }
+
+        .donate-icon {
+            font-size: 19px;
+            filter: drop-shadow(0 0 6px rgba(255, 149, 0, 0.7));
+        }
+
+        @keyframes gradientMove {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @keyframes softPulse {
+            0%, 100% {
+                box-shadow:
+                    0 0 22px rgba(0, 122, 255, 0.45),
+                    inset 0 0 18px rgba(255, 255, 255, 0.04);
+            }
+            50% {
+                box-shadow:
+                    0 0 34px rgba(255, 45, 85, 0.75),
+                    inset 0 0 18px rgba(255, 255, 255, 0.04);
+            }
+        }
+
+        .plist-item {
+            background: #1a1a1a;
+            padding: 16px 20px;
+            border: 1px solid #333;
+            border-radius: 10px;
+            margin: 15px 0;
+            box-shadow: 0 0 10px #00000040;
+            transition: transform 0.15s ease, background 0.15s ease;
+        }
+
+        .plist-item:hover {
+            transform: scale(1.02);
+            background: #222;
+        }
+
+        .plist-item strong {
+            font-size: 20px;
+            color: #fff;
+        }
+
+        .cert-validity {
+            margin-top: 6px;
+            font-size: 14px;
+            color: #9bd1ff;
+        }
+
+        .cert-days-left {
+            color: #f5cc5b;
+            font-weight: 600;
+        }
+
+        .cert-days-left.good {
+            color: #57d47b;
+        }
+
+        .cert-days-left.expired {
+            color: #ff8a8a;
+        }
+
+        .plist-item a {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 8px 14px;
+            background: #007aff;
+            color: #ffffff !important;
+            font-weight: 600;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: background 0.15s ease;
+        }
+
+        .plist-item a:hover {
+            background: #005bbf;
+        }
+
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 14px;
+            opacity: 0.5;
+        }
+
+        @media (max-width: 520px) {
+            .shortcut-button,
+            .donate-button {
+                width: 100%;
+                max-width: 280px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="logo-container">
+    <img src="https://files.catbox.moe/god4p6.jpeg" alt="Freesign Logo">
+</div>
+    
+<h1>BreakFree Freesign Installers</h1>
+<p>Use any of the below installers to install Freesign</p>
+
+<div class="shortcut-button-container">
+    <a class="shortcut-button" href="https://github.com/FrizzleM/BreakFree/releases/latest" target="_blank" rel="noopener noreferrer">
+        <span>Get the Shortcut 📲</span>
+    </a>
+
+    <a class="donate-button" href="https://ko-fi.com/frizzlem" target="_blank" rel="noopener noreferrer">
+        <span class="donate-icon">☕</span>
+        <span>Support on Ko-fi</span>
+    </a>
+</div>
+
+<div class="plist-item">
+<strong>XL</strong><br>
+<div class="cert-validity"><span class="cert-days-left good">988 days left</span></div>
+<a href="itms-services://?action=download-manifest&url=https://raw.githubusercontent.com/FrizzleM/BreakFree/main/Freesign/output/freesign-XL.plist">
+Install XL
+</a>
+</div>
+
+<div class="plist-item">
+<strong>National</strong><br>
+<div class="cert-validity"><span class="cert-days-left good">965 days left</span></div>
+<a href="itms-services://?action=download-manifest&url=https://raw.githubusercontent.com/FrizzleM/BreakFree/main/Freesign/output/freesign-National.plist">
+Install National
+</a>
+</div>
+
+<div class="plist-item">
+<strong>Rural</strong><br>
+<div class="cert-validity"><span class="cert-days-left good">892 days left</span></div>
+<a href="itms-services://?action=download-manifest&url=https://raw.githubusercontent.com/FrizzleM/BreakFree/main/Freesign/output/freesign-Rural.plist">
+Install Rural
+</a>
+</div>
+
+<div class="plist-item">
+<strong>ChinaAcademy</strong><br>
+<div class="cert-validity"><span class="cert-days-left good">874 days left</span></div>
+<a href="itms-services://?action=download-manifest&url=https://raw.githubusercontent.com/FrizzleM/BreakFree/main/Freesign/output/freesign-ChinaAcademy.plist">
+Install ChinaAcademy
+</a>
+</div>
+
+<div class="plist-item">
+<strong>ChinaPower</strong><br>
+<div class="cert-validity"><span class="cert-days-left good">868 days left</span></div>
+<a href="itms-services://?action=download-manifest&url=https://raw.githubusercontent.com/FrizzleM/BreakFree/main/Freesign/output/freesign-ChinaPower.plist">
+Install ChinaPower
+</a>
+</div>
+
+<div class="plist-item">
+<strong>Postal</strong><br>
+<div class="cert-validity"><span class="cert-days-left good">795 days left</span></div>
+<a href="itms-services://?action=download-manifest&url=https://raw.githubusercontent.com/FrizzleM/BreakFree/main/Freesign/output/freesign-Postal.plist">
+Install Postal
+</a>
+</div>
+
+<div class="plist-item">
+<strong>Takeoff</strong><br>
+<div class="cert-validity"><span class="cert-days-left good">729 days left</span></div>
+<a href="itms-services://?action=download-manifest&url=https://raw.githubusercontent.com/FrizzleM/BreakFree/main/Freesign/output/freesign-Takeoff.plist">
+Install Takeoff
+</a>
+</div>
+
+<div class="plist-item">
+<strong>Election</strong><br>
+<div class="cert-validity"><span class="cert-days-left good">691 days left</span></div>
+<a href="itms-services://?action=download-manifest&url=https://raw.githubusercontent.com/FrizzleM/BreakFree/main/Freesign/output/freesign-Election.plist">
+Install Election
+</a>
+</div>
+
+<div class="plist-item">
+<strong>Vietnam</strong><br>
+<div class="cert-validity"><span class="cert-days-left good">685 days left</span></div>
+<a href="itms-services://?action=download-manifest&url=https://raw.githubusercontent.com/FrizzleM/BreakFree/main/Freesign/output/freesign-Vietnam.plist">
+Install Vietnam
+</a>
+</div>
+
+<div class="plist-item">
+<strong>Wuling</strong><br>
+<div class="cert-validity"><span class="cert-days-left good">358 days left</span></div>
+<a href="itms-services://?action=download-manifest&url=https://raw.githubusercontent.com/FrizzleM/BreakFree/main/Freesign/output/freesign-Wuling.plist">
+Install Wuling
+</a>
+</div>
+
+<div class="plist-item">
+<strong>Forever</strong><br>
+<div class="cert-validity"><span class="cert-days-left good">244 days left</span></div>
+<a href="itms-services://?action=download-manifest&url=https://raw.githubusercontent.com/FrizzleM/BreakFree/main/Freesign/output/freesign-Forever.plist">
+Install Forever
+</a>
+</div>
+
+<div class="plist-item">
+<strong>BOC</strong><br>
+<div class="cert-validity"><span class="cert-days-left good">153 days left</span></div>
+<a href="itms-services://?action=download-manifest&url=https://raw.githubusercontent.com/FrizzleM/BreakFree/main/Freesign/output/freesign-BOC.plist">
+Install BOC
+</a>
+</div>
+
+<div class="plist-item">
+<strong>Aramco</strong><br>
+<div class="cert-validity"><span class="cert-days-left good">110 days left</span></div>
+<a href="itms-services://?action=download-manifest&url=https://raw.githubusercontent.com/FrizzleM/BreakFree/main/Freesign/output/freesign-Aramco.plist">
+Install Aramco
+</a>
+</div>
+
+<div class="plist-item">
+<strong>Beijing</strong><br>
+<div class="cert-validity"><span class="cert-days-left">77 days left</span></div>
+<a href="itms-services://?action=download-manifest&url=https://raw.githubusercontent.com/FrizzleM/BreakFree/main/Freesign/output/freesign-Beijing.plist">
+Install Beijing
+</a>
+</div>
+
+
+<div class="footer">
+    Made with ❤️ by Frizzle
+    <br>
+    Last updated: 06/06/2026, 16:19 CET
+</div>
+
+</body>
+</html>
