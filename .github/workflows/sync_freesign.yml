@@ -1,0 +1,69 @@
+name: sync_freesign
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 23 * * *'
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Make scripts executable
+        run: |
+          chmod +x sign_with_all_certs.sh
+          chmod +x generate_plist.sh
+          chmod +x generate_index.sh
+
+      - name: Sign Freesign IPA with all certificates
+        env:
+          APP_DIR: Freesign
+          OUTPUT_PREFIX: freesign
+          UNSIGNED_IPA_URL: https://files.catbox.moe/n51xwi.ipa
+          CERT_ZIP_URL: https://github.com/WSF-Team/WSF/raw/refs/heads/main/portal/resources/certificates.zip
+        run: ./sign_with_all_certs.sh
+
+      - name: Ensure signed IPAs exist
+        shell: bash
+        run: |
+          shopt -s nullglob
+          signed_ipas=(Freesign/output/freesign-*.ipa)
+          shopt -u nullglob
+
+          if [[ ${#signed_ipas[@]} -eq 0 ]]; then
+            echo "No signed IPAs were found in Freesign/output after running sign_with_all_certs.sh" >&2
+            exit 1
+          fi
+
+          printf '%s\n' "${signed_ipas[@]}"
+
+      - name: Generate OTA plist files
+        env:
+          APP_DIR: Freesign
+          OUTPUT_PREFIX: freesign
+        run: ./generate_plist.sh
+
+      - name: Generate Freesign HTML
+        env:
+          APP_DIR: Freesign
+          OUTPUT_PREFIX: freesign
+          APP_NAME: Freesign
+          OUTPUT_HTML: freesign.html
+        run: ./generate_index.sh
+
+      - name: Commit and push generated files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add -A Freesign/output freesign.html
+
+          git commit -m "sync_freesign: update signed IPAs, plists, and html" || echo "Nothing to commit"
+
+          git push
