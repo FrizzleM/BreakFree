@@ -2,7 +2,9 @@
 set -euo pipefail
 
 ROOT_DIR="${GITHUB_WORKSPACE:-$(pwd)}"
-OUTPUT_DIR="$ROOT_DIR/Feather/output"
+APP_DIR="${APP_DIR:-Feather}"
+OUTPUT_PREFIX="${OUTPUT_PREFIX:-feather}"
+OUTPUT_DIR="${OUTPUT_DIR:-$ROOT_DIR/$APP_DIR/output}"
 
 if [[ -n "${GITHUB_REPOSITORY:-}" && "$GITHUB_REPOSITORY" == */* ]]; then
   GITHUB_USER="${GITHUB_USER:-${GITHUB_REPOSITORY%/*}}"
@@ -20,7 +22,7 @@ generate_one() {
   IPA_FILENAME="$(basename "$IPA_PATH")"
 
   local IPA_URL
-  IPA_URL="https://raw.githubusercontent.com/$GITHUB_USER/$GITHUB_REPO/main/Feather/output/$IPA_FILENAME"
+  IPA_URL="https://raw.githubusercontent.com/$GITHUB_USER/$GITHUB_REPO/main/$APP_DIR/output/$IPA_FILENAME"
 
   local TMPDIR
   TMPDIR="$(mktemp -d)"
@@ -109,7 +111,7 @@ if [[ ${#OLD_PLISTS[@]} -gt 0 ]]; then
 fi
 
 shopt -s nullglob
-IPA_FILES=("$OUTPUT_DIR"/feather-*.ipa)
+IPA_FILES=("$OUTPUT_DIR"/"$OUTPUT_PREFIX"-*.ipa)
 shopt -u nullglob
 
 if [[ ${#IPA_FILES[@]} -eq 0 ]]; then
