@@ -8,6 +8,7 @@ OUTPUT_DIR="${OUTPUT_DIR:-$ROOT_DIR/$APP_DIR/output}"
 CERT_URL_FILE="$ROOT_DIR/Ksign-and-esign/certs/url"
 LOCAL_UNSIGNED_IPA="${LOCAL_UNSIGNED_IPA:-$ROOT_DIR/$APP_DIR/${OUTPUT_PREFIX}unsigned.ipa}"
 CERT_METADATA_FILE="${CERT_METADATA_FILE:-$OUTPUT_DIR/certificate-validity.tsv}"
+CERT_NAME_LIST_FILE="${CERT_NAME_LIST_FILE:-}"
 
 DEFAULT_CERT_ZIP_URL="https://github.com/WSF-Team/WSF/raw/refs/heads/main/portal/resources/certificates.zip"
 DEFAULT_UNSIGNED_IPA_URL="https://github.com/claration/Feather/releases/download/v1.4.1/feather_v1.4.1.ipa"
@@ -359,6 +360,9 @@ fi
 mkdir -p "$OUTPUT_DIR"
 clean_generated_artifacts "$OUTPUT_PREFIX-*.ipa"
 printf 'name\tcertificate_expires_at\tdays_left\n' > "$CERT_METADATA_FILE"
+if [[ -n "$CERT_NAME_LIST_FILE" ]]; then
+  : > "$CERT_NAME_LIST_FILE"
+fi
 
 CERT_ZIP_URL="$(resolve_cert_zip_url)"
 
@@ -563,6 +567,9 @@ while IFS= read -r P12_FILE; do
 
   log "Signed IPA created: $OUTPUT_PREFIX-$OUTPUT_NAME.ipa"
   printf '%s\t%s\t%s\n' "$OUTPUT_NAME" "$CERT_EXPIRES_AT" "$CERT_DAYS_LEFT" >> "$CERT_METADATA_FILE"
+  if [[ -n "$CERT_NAME_LIST_FILE" ]]; then
+    printf '%s\n' "$OUTPUT_NAME" >> "$CERT_NAME_LIST_FILE"
+  fi
 
   restore_keychains
   security delete-keychain "$KEYCHAIN" >/dev/null 2>&1 || true
