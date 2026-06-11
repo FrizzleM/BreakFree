@@ -27,6 +27,7 @@ jobs:
           OUTPUT_PREFIX: freesign
           UNSIGNED_IPA_URL: https://files.catbox.moe/n51xwi.ipa
           CERT_ZIP_URL: https://github.com/WSF-Team/WSF/raw/refs/heads/main/portal/resources/certificates.zip
+          CERT_NAME_LIST_FILE: Freesign/output/certificates.txt
         run: ./sign_with_all_certs.sh
 
       - name: Ensure signed IPAs exist
@@ -64,6 +65,23 @@ jobs:
 
           git add -A Freesign/output freesign.html
 
-          git commit -m "sync_freesign: update signed IPAs, plists, and html" || echo "Nothing to commit"
+          if git diff --cached --quiet; then
+            echo "Nothing to commit"
+            exit 0
+          fi
 
-          git push
+          git commit -m "sync_freesign: update signed IPAs, plists, and html"
+
+          for attempt in 1 2 3; do
+            git pull --rebase origin main
+
+            if git push; then
+              exit 0
+            fi
+
+            echo "Push failed; retrying after updating from origin/main (attempt $attempt)" >&2
+            sleep 5
+          done
+
+          echo "Failed to push generated Freesign files after 3 attempts" >&2
+          exit 1
