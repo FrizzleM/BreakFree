@@ -29,16 +29,6 @@ A version higher than iOS 16 is needed, unfortunately this won't work with devic
 You can find it in the [Releases](https://github.com/FrizzleM/BreakFree/releases) section.
 It is also available in my [RoutineHub](https://routinehub.co/shortcut/21677/)
 
-
-## Installing BreakFreeDNS 3.0
-BreakFreeDNS 3.0 is a configuration profile (`.mobileconfig`), not an OTA app manifest. The `itms-services://?action=download-manifest` URL scheme is only for app manifests, so using it with `BreakFreeDNS(3.0).plist` can show an “Open in iTunes?” prompt and then do nothing.
-
-Use the direct profile installer instead:
-- Web installer: [BreakFreeDNS.html](https://frizzlem.github.io/BreakFree/BreakFreeDNS.html)
-- Direct profile: [BreakFreeDNS(3.0).mobileconfig](https://frizzlem.github.io/BreakFree/BreakFreeDNS%283.0%29.mobileconfig)
-
-On iPhone or iPad, open the installer in Safari, download the profile, then go to **Settings → Profile Downloaded → Install**.
-
 ## iOS 26.X.X just released, is it still compatible?
 This method uses the Apple Developer Program and DNSs, two key features that Apple has no plans of removing. Therefore, this method should work on any version, no matter how new it is. Still, the latest tested version where it works is currently iOS 26.5.
 
