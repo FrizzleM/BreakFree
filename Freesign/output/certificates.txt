@@ -1,6 +1,5 @@
 Aramco
 BOC
-Beijing
 ChinaAcademy
 ChinaPower
 Election
